@@ -1,0 +1,107 @@
+LMLP with 1 layers
+
+Layer 1
+Composite layer with 4 units
+activation = <lib.lmlp.Normalization object at 0x785067a0afe0>
+
+Unit 1
+LMLP with 2 layers
+
+Layer 1
+LMLP layer
+input_dim = 7
+output_dim = 1
+activation = <lib.lmlp.And object at 0x785067a0abf0>
+trainable = True
+use_bias = False
+
+[[-3.33212899e-02 -2.65643749e+00  1.35670126e+00 -2.77001552e+00
+   1.94689883e+00  5.82426342e-05 -2.65584071e+00]]
+
+Layer 2
+LMLP layer
+input_dim = 1
+output_dim = 1
+activation = <lib.lmlp.Or object at 0x785067a0ab90>
+trainable = False
+use_bias = False
+
+[[10.]]
+
+
+Unit 2
+LMLP with 2 layers
+
+Layer 1
+LMLP layer
+input_dim = 7
+output_dim = 1
+activation = <lib.lmlp.And object at 0x785067a0ada0>
+trainable = True
+use_bias = False
+
+[[-0.11496866  2.86904097  2.53076506  0.30769861  2.46606615  0.01887977
+   2.45058436]]
+
+Layer 2
+LMLP layer
+input_dim = 1
+output_dim = 1
+activation = <lib.lmlp.Or object at 0x785067a0add0>
+trainable = False
+use_bias = False
+
+[[10.]]
+
+
+Unit 3
+LMLP with 2 layers
+
+Layer 1
+LMLP layer
+input_dim = 7
+output_dim = 1
+activation = <lib.lmlp.And object at 0x785067a0ab60>
+trainable = True
+use_bias = False
+
+[[-0.11088642 -0.16529432 -1.97398137  6.06553353 -2.00067874 -0.1272638
+  -0.20188461]]
+
+Layer 2
+LMLP layer
+input_dim = 1
+output_dim = 1
+activation = <lib.lmlp.Or object at 0x785067a0ae30>
+trainable = False
+use_bias = False
+
+[[10.]]
+
+
+Unit 4
+LMLP with 2 layers
+
+Layer 1
+LMLP layer
+input_dim = 7
+output_dim = 1
+activation = <lib.lmlp.And object at 0x785067a0aef0>
+trainable = True
+use_bias = False
+
+[[0.14396742 2.29340025 0.02339268 1.59486408 0.01118523 0.10064452
+  2.59390003]]
+
+Layer 2
+LMLP layer
+input_dim = 1
+output_dim = 1
+activation = <lib.lmlp.Or object at 0x785067a0af50>
+trainable = False
+use_bias = False
+
+[[10.]]
+
+
+

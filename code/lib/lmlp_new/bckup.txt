@@ -1,0 +1,132 @@
+from typing import Callable
+from abc import ABC, abstractmethod
+
+import numpy as np
+import numpy.typing as nptype
+
+
+# TODO: netreba at_least a squeeze, urobi to MLP
+
+
+class Activation(ABC):
+
+    @abstractmethod
+    def __call__(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        pass
+
+    @abstractmethod
+    def dW(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        pass
+
+    @abstractmethod
+    def dinput(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        pass
+
+
+class Sigmoid(Activation):
+
+    def __call__(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        net = W @ input
+
+        return 1 / (1 + np.exp(-net))
+    
+    def _dnet(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        out = self(W, input)
+
+        return out * (1 - out)
+
+    def dW(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        input = np.atleast_2d(input.T).T
+        dout_dnet = self._dnet(W, input)
+        
+        return np.squeeze(dout_dnet @ input.T, axis=-1)
+
+    def dinput(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        dout_dnet = self._dnet(W, input)
+
+        return W.T @ dout_dnet
+    
+
+class Tanh(Activation):
+
+    def __call__(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        net = W @ input
+
+        return 2 / (1 + np.exp(-2*net)) - 1
+    
+    def _dnet(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        out = self(W, input)
+
+        return 1 - out ** 2
+
+    def dW(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        input = np.atleast_2d(input.T).T
+        dout_dnet = self._dnet(W, input)
+
+        return np.squeeze(dout_dnet @ input.T, axis=-1)
+
+    def dinput(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        dout_dnet = self._dnet(W, input)
+
+        return W.T @ dout_dnet
+
+
+class ReLU(Activation):
+
+    def __call__(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        net = W @ input
+
+        return np.clip(net, 0, None)
+    
+    def _dnet(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        out = self(W, input)
+
+        return np.where(out >= 0, 1, 0)
+
+    def dW(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        input = np.atleast_2d(input.T).T
+        dout_dnet = self._dnet(W, input)
+
+        return np.squeeze(dout_dnet @ input.T, axis=-1)
+
+    def dinput(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        dout_dnet = self._dnet(W, input)
+
+        return W.T @ dout_dnet
+
+
+class Softmax(Activation):
+
+    def __init__(self, flatten: Callable[[nptype.NDArray], nptype.NDArray] | None = None) -> None:
+        super().__init__()
+
+        if flatten is None:
+            self.flatten = lambda x: np.sum(x, axis=1)
+        else:
+            self.flatten = lambda x: np.apply_along_axis(flatten, x)
+
+    def __call__(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        net = W @ input
+        exp_net = np.exp(net)
+
+        return exp_net / np.sum(exp_net, axis=1)
+
+    def _dnet(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        out = self(W, input)
+        id = np.identity(out.shape[0])
+
+        # element at [i, j, k] -> ith net, jth output, kth sample
+        dout_dnet_full = np.apply_along_axis(lambda c: (id - c).T * c, 0, out)
+
+        return self.flatten(dout_dnet_full)
+
+    def dW(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        input = np.atleast_2d(input.T).T
+        dout_dnet = self._dnet(W, input)
+
+        return np.squeeze(dout_dnet @ input.T, axis=-1)
+
+    def dinput(self, W: nptype.NDArray, input: nptype.NDArray) -> nptype.NDArray:
+        dout_dnet = self._dnet(W, input)
+
+        return W.T @ dout_dnet

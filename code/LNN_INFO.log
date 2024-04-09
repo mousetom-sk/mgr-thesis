@@ -1,0 +1,12 @@
+INFO:root:********************** Model 2024-03-14 09:54:48.452944 **********************
+INFO:root:----------------------
+INFO:root:REASONING STEP:0
+INFO:root:↑ BOUNDS UPDATED TIGHTENED:1.0 FOR:'(on(a, b) ∧ on(b, table) ∧ on(c, table) ∧ on(d, table) ∧ top(b) ∧ top(c) ∧ top(d))' FORMULA:1 
+INFO:root:↑ BOUNDS UPDATED TIGHTENED:1.0 FOR:'((on(a, b) ∧ on(b, table) ∧ on(c, table) ∧ on(d, table) ∧ top(b) ∧ top(c) ∧ top(d)) ∨ (on(a, b) ∧ on(b, table) ∧ on(c, d) ∧ on(d, table) ∧ top(b) ∧ top(c)))' FORMULA:0 
+INFO:root:UPWARD INFERENCE RESULT:2.0
+INFO:root:----------------------
+INFO:root:REASONING STEP:1
+INFO:root:NO UPDATES AVAILABLE, TRYING A NEW AXIOM
+INFO:root:======================
+INFO:root:INFERENCE CONVERGED WITH 2.0 BOUNDS UPDATES IN 2 REASONING STEPS 
+INFO:root:******************************************************************************

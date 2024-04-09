@@ -1,0 +1,71 @@
+move(b, a)
+
+top(a) 1.
+on(b, a) 0.
+on(c, a) 0.
+on(d, a) 0.
+top(b) 0.12199316
+on(a, b) 0.
+on(c, b) 0.
+on(d, b) 0.
+top(c) 0.04180485
+on(a, c) 0.
+on(b, c) 0.
+on(d, c) 0.
+top(d) 0.0121536
+on(a, d) 0.
+on(b, d) 0.
+on(c, d) 0.
+on(a, table) 0.0121536
+on(b, table) 1.
+on(c, table) 1.
+on(d, table) 1.
+
+
+
+
+
+
+
+
+
+
+top(a)
+on(b, a)
+top(b)
+on(a, b)
+on(a, table)
+on(b, table)
+
+
+
+
+
+
+top(a)
+on(b, a)
+on(c, a)
+top(b)
+on(a, b)
+on(c, b)
+top(c)
+on(a, c)
+on(b, c)
+on(a, table)
+on(b, table)
+on(c, table)
+
+
+move(b, a)
+move(c, a)
+move(d, a)
+move(a, b)
+move(c, b)
+move(d, b)
+move(a, c)
+move(b, c)
+move(d, c)
+move(a, d)
+move(a, d)
+move(b, d)
+move(c, d)
