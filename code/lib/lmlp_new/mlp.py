@@ -68,8 +68,6 @@ class LMLPCompositeLayer:
         self.output_dim = len(units)
         self.activation = activation
 
-        self.gradients_history = []
-
     def init_weights(self):
         self.W = np.identity(self.output_dim)
 
@@ -84,8 +82,13 @@ class LMLPCompositeLayer:
             units_output.append(inter[-1])
 
         units_output = np.concatenate(units_output)
+        out = self.activation.evaluate(units_output)
 
-        return units_intermediate + [units_output, self.activation.evaluate(units_output)]
+        # if np.isnan(out).any():
+        #     print(units_output)
+        #     print("here")
+
+        return units_intermediate + [units_output, out]
 
     def __str__(self) -> str:
         desc = [f"Composite layer with {len(self.units)} units",
@@ -98,6 +101,7 @@ class LMLPCompositeLayer:
             desc.append("")
 
         return "\n".join(desc)
+
 
 class LMLP:
 

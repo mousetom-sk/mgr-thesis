@@ -1,0 +1,34 @@
+LMLP with 1 layers
+
+Layer 1
+Composite layer with 2 units
+activation = <lib.lmlp_generic.activations.And object at 0x7c641d045db0>
+
+Unit 1
+LMLP with 1 layers
+
+Layer 1
+LMLP layer
+output_dim = 1
+activation = <lib.lmlp_generic.activations.And object at 0x7c641d045d20>
+trainable = True
+use_bias = False
+
+[[1.49950809 1.7302391  1.44054565 1.144943  ]]
+
+
+Unit 2
+LMLP with 1 layers
+
+Layer 1
+LMLP layer
+output_dim = 1
+activation = <lib.lmlp_generic.activations.And object at 0x7c641d045bd0>
+trainable = True
+use_bias = False
+
+[[1.4894279  1.65314921 1.2915119  1.11736886 1.25356685 1.3288592
+  1.43423968 1.55027284]]
+
+
+

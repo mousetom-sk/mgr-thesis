@@ -182,10 +182,10 @@ class Normalization(Activation):
         return W @ x
 
     def evaluate(self, net: nptype.NDArray) -> nptype.NDArray:
-        return net / np.sum(net)
+        return np.nan_to_num(net / np.sum(net)) # max(np.sum(net), 1e-10)
 
     def grad(self, net: nptype.NDArray) -> nptype.NDArray:
-        net_sum = np.sum(net)
+        net_sum = np.sum(net) # max(np.sum(net), 1e-10)
 
         return (np.diag(np.full(len(net), net_sum)) - net) / net_sum ** 2
     

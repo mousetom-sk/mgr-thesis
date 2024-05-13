@@ -117,7 +117,8 @@ class BlocksWorld(Environment):
         self._initial_state = (self._parse_raw_state(initial_state) if initial_state is not None
                                else None)
         
-        self._subgoals = self._generate_subgoals(goal_state)
+        if self._initial_state:
+            self._subgoals = self._generate_subgoals(goal_state)
         
         self.reset()
 
@@ -200,12 +201,14 @@ class BlocksWorld(Environment):
         return self._bad_action or self.is_goal()
     
     def is_goal(self) -> bool:
-        return self._goal_state.is_subset(self._current_state)
+        return self._goal_state.is_subset(self._current_state) # validity: False
 
     def step(self, action: ActionAtom) -> Tuple[State, int]:
+        print(action, end=" ")
+        
         if not self.is_valid_action(action):
             self._bad_action = True
-            return self._current_state, -0.1#2
+            return self._current_state, -0.1 # 2
         
         if isinstance(action, self.Move):
             new_valuation = dict(self._current_state.features)
@@ -236,19 +239,15 @@ class BlocksWorld(Environment):
             subgoal_diff = len(reached - self._subgoals_reached) - 1.1 * len(self._subgoals_reached - reached)
 
             if subgoal_diff != 0:
-                reward = 1 * subgoal_diff
+                reward = subgoal_diff
             else:
                 reward = -0.1
 
             self._subgoals_reached = reached
 
-            # for sg in list(self._subgoals_not_reached):
-            #     if sg.is_subset(self._current_state):
-            #         reward = 2
-            #         # self._subgoals_not_reached.discard(sg)
-            #         break
-            # else:
-            #     reward = -0.01
+            # generic (option): reward = -0.1
+
+        # validity: reward = 0.1
 
         return self._current_state, reward
     
@@ -271,7 +270,6 @@ class BlocksWorld(Environment):
 
     def reset(self) -> State:
         self._bad_action = False
-        # self._subgoals_not_reached = set(self._subgoals)
         self._subgoals_reached = set()
 
         if self._initial_state is None:

@@ -58,19 +58,16 @@ class BackpropagationOptimizer(LMLPOptimizer, ABC):
         net = layer.activation.net(layer.W, input)
         grad_out_net = layer.activation.grad(net)
         
-        if len(grad_out_net.shape) == 2:
-            grad_obj_out_ext = np.apply_along_axis(
-                lambda col: np.tile(col, (len(col), 1)), 0, grad_obj_out
-            )
-
+        if len(grad_out_net.shape) > len(grad_obj_out.shape):
             # assumes that the overall objective is an affine transformation of objectives over individual outputs
-            grad_obj_net = np.sum(grad_obj_out_ext * grad_out_net, axis=1)
+            grad_obj_net = np.einsum("ij,j->i", grad_out_net, grad_obj_out)
         else:
             grad_obj_net = grad_obj_out * grad_out_net
         
         mask = np.where(np.abs(grad_obj_out) > 0, 1, 0)
         mask = np.tile(mask, (len(input), 1))
-        grad_obj_in = (layer.activation.grad_net_input(layer.W, input) * mask) @ grad_obj_net            
+        grad_obj_in = (layer.activation.grad_net_input(layer.W, input) * mask) @ grad_obj_net
+
         # grad_obj_in = layer.activation.grad_net_input(layer.W, input) @ grad_obj_net
 
         if isinstance(layer, LMLPCompositeLayer):

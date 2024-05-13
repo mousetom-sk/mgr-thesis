@@ -57,6 +57,8 @@ class LMLPAgent(Agent):
 
             state = new_state
             steps_left -= 1
+
+        print()
         
         if environment.is_goal():
             return total_reward, True, trajectory
@@ -76,10 +78,6 @@ class LMLPAgent(Agent):
             grad_obj_out[action_idx] = (gamma ** t) * G / action_prob
             self._optimizer.optimize(grad_obj_out, inter)
 
-            # if t == 2:
-            #     print(self._lmlp.forward(inter[0][0][0])[-1])
-            #     print()
-
             t -= 1
 
     def train(self, environment: Environment, episodes: int) -> List[float]:
@@ -89,19 +87,20 @@ class LMLPAgent(Agent):
         self._setup(environment)
 
         for i in range(episodes):
-            print(f"Episode {i}")
+            print(f"Episode {i}:", end=" ")
 
-            # if i > 200 and i % 10 == 0:
-            #     print(i)
+            if i == 68:
+                print("a")
 
             total_reward, is_goal, trajectory = self._sample_episode(environment)
+            print(total_reward, is_goal)
             reward_history.append(total_reward)
             goal_history.append(is_goal)
             self._update(trajectory)
 
         self._trained = True
 
-        print(self._lmlp, file=open("test_lmlp_new.txt", "w"))
+        print(self._lmlp, file=open("test_lmlp_new2.txt", "w"))
 
         return reward_history, goal_history
 
