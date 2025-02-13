@@ -26,10 +26,12 @@ class LMLPA2C(Agent):
         
         for _ in self._all_actions:
             a_lmlp = LMLPSequential(
-                LMLPLayer(len(self._all_features), 1, And3(),
-                          ConstantInitializer(0), NoRegularizer())#UncertaintyRegularizer(1e-3)) #L1AdaptiveRegularizer(0.15, 1e-4) #UncertaintyRegularizer(1e-3) #SimilarityRegularizer(1e-2)), #ZeroingPostprocessor(0.5, 1000)),
-                # LMLPLayer(2, 1, Or3(), ConstantInitializer(10), trainable=False)
+                LMLPLayer(len(self._all_features), 2, And3(),
+                          UniformInitializer(0.5), UncertaintyRegularizer(1e-3)), #L1AdaptiveRegularizer(0.15, 1e-4) #UncertaintyRegularizer(1e-3) #SimilarityRegularizer(1e-2)), #ZeroingPostprocessor(0.5, 1000)),
+                LMLPLayer(2, 1, Xor3Fixed(), ConstantInitializer(0), trainable=False)
             )
+            # with torch.no_grad():
+            #     a_lmlp.lmlp_modules[0].weight[:, -1] = 2
             self._a_lmlps.append(a_lmlp)
         
         self._device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -146,7 +148,8 @@ class LMLPA2C(Agent):
             action_log_prob = action_dist.log_prob(action)
             action = torch.argmax(action)
 
-            next_state, reward, terminated, truncated, _ = training_env.step(action)
+            next_state, reward, terminated, truncated, info = training_env.step(action)
+            print(self._all_actions[action], end=" ")
 
             state_tuple = tuple(state.items())
             next_state_tuple = tuple(next_state.items())
@@ -172,6 +175,9 @@ class LMLPA2C(Agent):
             training_steps -= 1
             before_eval -= 1
             done = terminated or truncated or (training_steps <= 0)
+
+        print()
+        print(info["is_goal"])
             
         return training_steps, before_eval, avg_returns, avg_goals
 
@@ -197,7 +203,7 @@ class LMLPA2C(Agent):
 
         self._trained = True
 
-        print(self._lmlp, file=open("_my/logs/torch_a2cu.txt", "w"))
+        print(self._lmlp, file=open("torch_a2cr.txt", "w"))
 
         return reward_history, goal_history, inits
     

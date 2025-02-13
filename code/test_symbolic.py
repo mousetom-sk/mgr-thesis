@@ -64,8 +64,3 @@ if __name__ == "__main__":
     ax.legend()
 
     plt.show()
-
-
-    # print("Testing")
-    # rewards, goals, inits = agent.evaluate(training_env, 1000)
-    # print(sum(goals) / len(goals))

@@ -155,6 +155,35 @@ class Xor3(Activation):
         return self._and.forward(xor_weight, xor_in)
 
 
+class Xor3Fixed(Activation):
+
+    epsilon: float = 1e-10
+
+    def forward(self, weight: Tensor, input: Tensor) -> Tensor:
+        clauses = torch.tile((1 - input), (len(input), 1))
+        clauses[range(len(input)), range(len(input))] = input
+
+        clauses_and = torch.prod(clauses, 1)
+        vanishing_grad = clauses_and < self.epsilon
+
+        if torch.any(vanishing_grad):
+            min_threshold = torch.min(clauses, 1).values + self.epsilon
+            min_mask = (clauses.T < min_threshold).T
+            godel_and = torch.mean(min_mask * clauses, 1)
+
+            clauses_and = torch.where(vanishing_grad, godel_and, clauses_and)
+
+        negated_or = torch.prod(1 - clauses_and, 0, keepdim=True)
+
+        if negated_or < self.epsilon:
+            min_threshold = torch.min(clauses_and) + self.epsilon
+            min_mask = clauses_and < min_threshold
+            
+            negated_or = torch.mean(min_mask * clauses_and)
+
+        return 1 - negated_or
+
+
 class Normalization(Activation):
 
     def forward(self, weight: Tensor, input: Tensor) -> Tensor:

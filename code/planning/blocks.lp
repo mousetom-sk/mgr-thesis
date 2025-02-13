@@ -3,10 +3,10 @@
 
 block(a;b;c;d).
 
-init(on(a,table)).
+init(on(a,b)).
 init(on(b,c)).
-init(on(c,table)).
-init(on(d,b)).
+init(on(c,d)).
+init(on(d,table)).
 
 goal(on(a,table)).
 goal(on(b,a)).

@@ -1,3 +1,5 @@
+import os
+
 from envs.symbolic import BlocksWorld
 from agents.symbolic import *
 
@@ -5,10 +7,15 @@ from agents.symbolic import *
 horizon = 50
 blocks = ["a", "b", "c", "d"]
 goal = [["a", "b", "c", "d"]]
-save_dir = "models/lmlp_a2c"
+save_dir = "models/lmlp_a2c_reg2_rnd_xor_test"
 
 
 if __name__ == "__main__":
+    try:
+        os.mkdir(save_dir)
+    except:
+        pass
+
     training_env = BlocksWorld(horizon, blocks[:], goal[:], None)
     training_env.reset(seed=5)
 
@@ -19,7 +26,7 @@ if __name__ == "__main__":
 
     print("Training")
     returns, goals = agent.train_eval(
-        training_env, 15000, eval_env, 100, 100, save_dir
+        training_env, 15000, eval_env, 100, 100000, save_dir
     )
 
     with open(f"{save_dir}/training_results.txt", "w") as out:

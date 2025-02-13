@@ -220,7 +220,7 @@ class UncertaintyRegularizer(WeightRegularizer):
 
         abs_scaled_weight = torch.abs(torch.tanh(weight))
 
-        return self.strength * torch.sum(abs_scaled_weight * (1 - abs_scaled_weight))
+        return self.strength * torch.sum(abs_scaled_weight * (1.5 - abs_scaled_weight) / 2)
 
 
 
@@ -228,8 +228,8 @@ class SimilarityRegularizer(WeightRegularizer):
 
     strength: float
     
-    _and: And3 = And3()
-    _weight: Tensor = torch.tensor([[10, 10]])
+    # _and: And3 = And3()
+    # _weight: Tensor = torch.tensor([[10, 10]])
 
     def __init__(self, strength: float) -> None:
         super().__init__()
@@ -237,19 +237,49 @@ class SimilarityRegularizer(WeightRegularizer):
         self.strength = strength
 
     def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+        if len(output.shape) < 2:
+            output = torch.atleast_2d(output).T
+        
         detached = output.detach()
-        self._weight = self._weight.to(output)
+        # self._weight = self._weight.to(output)
 
-        n = len(output)
-        output_pairs = torch.stack([torch.repeat_interleave(output[1:], n),
-                                    torch.tile(detached, (n - 1,))])
-        previous = torch.tril(torch.ones((n - 1, n), dtype=torch.bool)).flatten()
-        loss = torch.sum(self._and.forward(self._weight, output_pairs[previous]))
+        loss = torch.sum(torch.tril(output @ detached.T, -1))
+
+        # n = len(output)
+        # output_pairs = torch.stack([torch.repeat_interleave(output[1:], n),
+        #                             torch.tile(detached, (n - 1,))])
+        # previous = torch.tril(torch.ones((n - 1, n), dtype=torch.bool)).flatten()
+        # loss = torch.sum(self._and.forward(self._weight, output_pairs[previous]))
 
         # loss = sum(self._and.forward(self._weight, torch.concatenate([detached[j:j+1], output[i:i+1]]))
         #            for i in range(len(output)) for j in range(i))
 
         return self.strength * loss
+
+
+# class SimilarityRegularizer(WeightRegularizer):
+
+#     strength: float
+
+#     def __init__(self, strength: float) -> None:
+#         super().__init__()
+
+#         self.strength = strength
+
+#     def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+#         detached = output.detach()
+#         self._weight = self._weight.to(output)
+
+#         n = len(output)
+#         output_pairs = torch.stack([torch.repeat_interleave(output[1:], n),
+#                                     torch.tile(detached, (n - 1,))])
+#         previous = torch.tril(torch.ones((n - 1, n), dtype=torch.bool)).flatten()
+#         loss = torch.sum(self._and.forward(self._weight, output_pairs[previous]))
+
+#         # loss = sum(self._and.forward(self._weight, torch.concatenate([detached[j:j+1], output[i:i+1]]))
+#         #            for i in range(len(output)) for j in range(i))
+
+#         return self.strength * loss
 
 
 ####################

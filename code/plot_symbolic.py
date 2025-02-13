@@ -32,7 +32,7 @@ if __name__ == "__main__":
     for m, d in zip(models, data):
         ax.plot(times, d["returns"], label=m["label"])
 
-    ax.set_xlabel("Evaluation Time")
+    ax.set_xlabel("Evaluation Time (once per 100 training steps)")
     ax.set_xticks([1] + list(range(10, len(times) + 1, 10)))
     ax.set_xlim(1, len(times))
     ax.set_ylabel("Average Return")
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     for m, d in zip(models, data):
         ax.plot(times, d["goals"], label=m["label"])
         
-    ax.set_xlabel("Evaluation Time")
+    ax.set_xlabel("Evaluation Time (once per 100 training steps)")
     ax.set_xticks([1] + list(range(10, len(times) + 1, 10)))
     ax.set_xlim(1, len(times))
     ax.set_ylabel("Success Rate")
