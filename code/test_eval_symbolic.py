@@ -7,7 +7,7 @@ from agents.symbolic import *
 horizon = 50
 blocks = ["a", "b", "c", "d"]
 goal = [["a", "b", "c", "d"]]
-save_dir = "models/lmlp_a2c_reg2_rnd_xor_test"
+save_dir = "models/lmlp_a2c_test"
 
 
 if __name__ == "__main__":
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     print()
     print("Testing")
-    returns, goals = agent.evaluate(eval_env, 1000)
+    returns, goals = agent.evaluate(eval_env, 1000, save_dir)
     print(sum(goals) / len(goals))
 
     with open(f"{save_dir}/test_results.txt", "w") as out:

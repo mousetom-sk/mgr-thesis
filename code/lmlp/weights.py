@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 import torch
 from torch import Tensor
 
-from .activations import And3
+from .activations import And3, Xor3Fixed2, Or3Fixed
 
 
 ####################
@@ -190,6 +190,36 @@ class L1NRegularizer(WeightRegularizer):
 
     def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
         return self.strength * torch.mean(torch.sum(torch.abs(weight), 1))
+    
+
+class L1DynamicRegularizer(WeightRegularizer):
+
+    strength: float
+
+    def __init__(self, strength: float) -> None:
+        super().__init__()
+
+        self.strength = strength
+
+    def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+        abs_scaled_weight = torch.abs(torch.tanh(weight))
+        weight_sum = torch.sum(abs_scaled_weight, 1, True)
+        loss = (weight_sum - abs_scaled_weight).detach() * abs_scaled_weight
+
+        return self.strength * torch.sum(loss)
+
+
+class L1OutRegularizer(WeightRegularizer):
+
+    strength: float
+
+    def __init__(self, strength: float) -> None:
+        super().__init__()
+
+        self.strength = strength
+
+    def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+        return self.strength * torch.sum(output)
 
 
 class UncertaintyRegularizer(WeightRegularizer):
@@ -220,8 +250,85 @@ class UncertaintyRegularizer(WeightRegularizer):
 
         abs_scaled_weight = torch.abs(torch.tanh(weight))
 
+        return self.strength * torch.sum(abs_scaled_weight * (1 - abs_scaled_weight))
+    
         return self.strength * torch.sum(abs_scaled_weight * (1.5 - abs_scaled_weight) / 2)
 
+        return self.strength * torch.sum(abs_scaled_weight * (1.8 - abs_scaled_weight) / 3)
+
+
+class UncertaintyRegularizer2(WeightRegularizer):
+
+    strength: float
+
+    def __init__(self, strength: float) -> None:
+        super().__init__()
+
+        self.strength = strength
+
+    def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+        abs_scaled_weight = torch.abs(torch.tanh(weight))
+    
+        return self.strength * torch.sum(abs_scaled_weight * (1.6 - abs_scaled_weight))
+    
+
+class UncertaintyRegularizer3(WeightRegularizer):
+
+    strength: float
+
+    def __init__(self, strength: float) -> None:
+        super().__init__()
+
+        self.strength = strength
+
+    def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+        abs_scaled_weight = torch.abs(torch.tanh(weight))
+        loss = abs_scaled_weight * (1.6 - abs_scaled_weight)
+        loss = torch.where(abs_scaled_weight > 0.8, 0.64 * torch.ones_like(loss), loss)
+    
+        return self.strength * torch.sum(loss)
+
+
+class XorRegularizer(WeightRegularizer):
+
+    _xor = Xor3Fixed2()
+    _or = Or3Fixed()
+
+    strength: float
+
+    def __init__(self, strength: float) -> None:
+        super().__init__()
+
+        self.strength = strength
+        self._or_history = []
+        self._xor_history = []
+
+    def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+        self._or_history.append(self._or.forward(None, output))
+        self._xor_history.append(torch.sum(self._xor.forward(None, output)))
+
+        return - self.strength * self._xor_history[-1]
+
+
+class OrRegularizer(WeightRegularizer):
+
+    _xor = Xor3Fixed2()
+    _or = Or3Fixed()
+
+    strength: float
+
+    def __init__(self, strength: float) -> None:
+        super().__init__()
+
+        self.strength = strength
+        self._or_history = []
+        self._xor_history = []
+
+    def compute_loss(self, weight: Tensor, output: Tensor) -> Tensor:
+        self._or_history.append(self._or.forward(None, output))
+        self._xor_history.append(torch.sum(self._xor.forward(None, output)))
+
+        return torch.tensor(0) #- self.strength * self._or_history[-1]
 
 
 class SimilarityRegularizer(WeightRegularizer):

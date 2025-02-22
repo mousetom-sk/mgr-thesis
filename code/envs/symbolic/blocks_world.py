@@ -1,4 +1,6 @@
-from typing import Tuple, List, Dict, Any
+from typing import Tuple, List, Dict, Set, Any
+
+import itertools
 
 import numpy as np
 from gymnasium import spaces
@@ -37,6 +39,7 @@ class BlocksWorld(SymbolicEnvironment):
     _blocks: List[str]
     _goal_state: Valuation
     _all_subgoals: List[Valuation]
+    _all_states: List[Valuation]
     _initial_state: Valuation
     _invalid_state: Valuation
     _current_state: Valuation
@@ -64,6 +67,7 @@ class BlocksWorld(SymbolicEnvironment):
                                else self._parse_raw_state(initial_state))
         
         self._init_subgoals(goal_state)
+        self._init_all_states()
         self._init_invalid_state()
 
         self.observation_space = spaces.Dict(
@@ -92,14 +96,6 @@ class BlocksWorld(SymbolicEnvironment):
                 if b1 != b2:
                     self.action_atoms.append(Move(b2, b1))
     
-    def _init_invalid_state(self) -> None:
-        self._invalid_state = {}
-
-        for atom in self.state_atoms:
-            self._semantics.set_false(atom, self._invalid_state)
-
-        self._semantics.set_true(Contradiction(), self._invalid_state)
-
     def _init_subgoals(self, raw_goal_state: List[List[str]]) -> None:
         blocks_backup = list(self._blocks)
         self._all_subgoals = []
@@ -115,20 +111,38 @@ class BlocksWorld(SymbolicEnvironment):
 
         self._blocks = blocks_backup 
 
-    def _generate_random_state(self) -> Valuation:
-        shuffled_blocks = self.np_random.permutation(self._blocks)
-        stack_ends = np.concatenate((self.np_random.integers(2, size=len(self._blocks) - 1),
-                                     np.array([1])))
+    def _init_invalid_state(self) -> None:
+        self._invalid_state = {}
 
-        raw_state = []
-        stack = []
+        for atom in self.state_atoms:
+            self._semantics.set_false(atom, self._invalid_state)
 
-        for block, end_stack in zip(shuffled_blocks, stack_ends):
-            stack.append(block)
+        self._semantics.set_true(Contradiction(), self._invalid_state)
 
-            if end_stack:
-                raw_state.append(stack)
+    def _init_all_states(self) -> None:
+        _all_states = set()
+        
+        for permutation in itertools.permutations(self._blocks):
+            for stacking in itertools.product(range(2), repeat=len(self._blocks) - 1):
+                stacking = list(stacking) + [1]
+                raw_state = []
                 stack = []
+
+                for block, end_stack in zip(permutation, stacking):
+                    stack.append(block)
+
+                    if end_stack:
+                        raw_state.append(tuple(stack))
+                        stack = []
+                
+                _all_states.add(tuple(sorted(raw_state)))
+
+        self._all_states = list(_all_states)
+
+    def _generate_random_state(self) -> Valuation:
+        state_index = self._np_random.integers(len(self._all_states))
+        raw_state = self._all_states[state_index]
+        raw_state = [list(stack) for stack in raw_state]
 
         return self._parse_raw_state(raw_state)
 
