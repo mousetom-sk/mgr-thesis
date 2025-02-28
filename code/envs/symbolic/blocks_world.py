@@ -56,7 +56,7 @@ class BlocksWorld(SymbolicEnvironment):
             raise ValueError(f"No block can be named {self._table}")
         
         self._horizon = horizon
-        self._blocks = list(blocks)
+        self._blocks = blocks[:]
         self._use_top = use_top
         self._semantics = semantics
         self._init_state_atoms()

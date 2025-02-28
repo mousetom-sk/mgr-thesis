@@ -4,7 +4,8 @@
 misc
 code/_my
 code/models
-code-v2
+code-v2/_my
+code-v2/models
 text
 __pycache__/
 literature/

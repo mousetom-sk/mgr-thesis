@@ -1,0 +1,1 @@
+Namespace(num_runs=10, actor_init='constant', actor_init_arg=0.0, actor_assume_false=False, actor_optim='rms', actor_lr=0.01, critic_lr=0.05)

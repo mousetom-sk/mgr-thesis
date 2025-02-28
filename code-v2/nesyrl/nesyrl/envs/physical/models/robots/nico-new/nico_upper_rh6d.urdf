@@ -1,0 +1,689 @@
+<?xml version="1.0" ?>
+
+<robot name="nico_upper_rh6d">
+  <joint name="endeffector_joint" type="fixed">
+    <origin rpy="-0.00000 0.00000 -0.00000" xyz="0.00000 -0.00000 -0.05000"/>
+    <parent link="gripper"/>
+    <child link="endeffector"/>
+  </joint>
+  <joint name="gripper_rjoint" type="revolute">
+    <limit lower="-2.57000" upper="0" effort="30" velocity="1"/>
+    <origin rpy="-0.00000 0.00000 -0.00000" xyz="-0.00000 -0.02000 -0.06000"/>
+    <parent link="r_palm"/>
+    <child link="gripper"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="head_y_rjoint" type="fixed">
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.10500"/>
+    <parent link="neck"/>
+    <child link="head"/>
+  </joint>
+  <joint name="head_z_rjoint" type="fixed">
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02000 0.00000 0.23000"/>
+    <parent link="torso"/>
+    <child link="neck"/>
+  </joint>
+  <joint name="l_arm_x" type="fixed">
+    <origin rpy="0.00068 -0.05128 -0.00004" xyz="0.02450 0.07366 -0.02285"/>
+    <parent link="left_collarbone:11"/>
+    <child link="left_upper_arm:11"/>
+  </joint>
+  <joint name="l_elbow_y" type="fixed">
+    <origin rpy="3.14159 -1.44562 -3.14159" xyz="-0.03458 0.02307 -0.16986"/>
+    <parent link="left_upper_arm:11"/>
+    <child link="left_lower_arm:11"/>
+  </joint>
+  <joint name="l_indexfinger_1st_x" type="fixed">
+    <origin rpy="-0.09524 -0.00000 -0.00000" xyz="-0.00951 -0.00000 -0.01600"/>
+    <parent link="finger_segment:25"/>
+    <child link="finger_segment:15"/>
+  </joint>
+  <joint name="l_indexfinger_2nd_x" type="fixed">
+    <origin rpy="-0.10961 -0.00000 -0.00000" xyz="0.00000 -0.00000 -0.01600"/>
+    <parent link="finger_segment:15"/>
+    <child link="fingertip:15"/>
+  </joint>
+  <joint name="l_indexfingers_x" type="fixed">
+    <origin rpy="2.49295 0.06290 -0.00000" xyz="-0.00144 0.00623 0.04000"/>
+    <parent link="left_palm:11"/>
+    <child link="finger_segment:25"/>
+  </joint>
+  <joint name="l_ringfinger_1st_x" type="fixed">
+    <origin rpy="-0.09525 0.00000 -0.00000" xyz="-0.00951 -0.00000 -0.01600"/>
+    <parent link="finger_segment:26"/>
+    <child link="finger_segment:16"/>
+  </joint>
+  <joint name="l_ringfinger_2nd_x" type="fixed">
+    <origin rpy="-0.10961 -0.00000 0.00000" xyz="0.00000 -0.00000 -0.01600"/>
+    <parent link="finger_segment:16"/>
+    <child link="fingertip:16"/>
+  </joint>
+  <joint name="l_ringfingers_x" type="fixed">
+    <origin rpy="2.49951 -0.06290 -0.00000" xyz="-0.03618 0.00623 0.04057"/>
+    <parent link="left_palm:11"/>
+    <child link="finger_segment:26"/>
+  </joint>
+  <joint name="l_shoulder_y" type="fixed">
+    <origin rpy="0.00000 -0.00445 -0.01954" xyz="0.02245 0.02257 0.03700"/>
+    <parent link="left_shoulder"/>
+    <child link="left_collarbone:11"/>
+  </joint>
+  <joint name="l_shoulder_z_rjoint" type="fixed">
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.04500 0.23000"/>
+    <parent link="torso"/>
+    <child link="left_shoulder"/>
+  </joint>
+  <joint name="l_thumb_1st_x" type="fixed">
+    <origin rpy="-0.09525 0.00000 0.00000" xyz="-0.00951 0.00000 -0.01600"/>
+    <parent link="finger_segment:24"/>
+    <child link="finger_segment:14"/>
+  </joint>
+  <joint name="l_thumb_2nd_x" type="fixed">
+    <origin rpy="-0.10961 -0.00000 0.00000" xyz="0.00000 -0.00000 -0.01600"/>
+    <parent link="finger_segment:14"/>
+    <child link="fingertip:14"/>
+  </joint>
+  <joint name="l_thumb_x" type="fixed">
+    <origin rpy="-1.13053 -0.00000 3.14159" xyz="-0.02800 0.01990 0.00842"/>
+    <parent link="left_palm:11"/>
+    <child link="finger_segment:24"/>
+  </joint>
+  <joint name="l_wrist_x" type="fixed">
+    <origin rpy="0.46094 0.00000 -0.00000" xyz="0.02342 0.00605 0.07084"/>
+    <parent link="left_wrist:11"/>
+    <child link="left_palm:11"/>
+  </joint>
+  <joint name="l_wrist_z" type="fixed">
+    <origin rpy="-3.14159 0.00000 0.02870" xyz="0.00000 -0.01020 -0.12555"/>
+    <parent link="left_lower_arm:11"/>
+    <child link="left_wrist:11"/>
+  </joint>
+  <joint name="r_elbow_y_rjoint" type="revolute">
+    <limit lower="0.87260" upper="3.14160" effort="30" velocity="1"/>
+    <origin rpy="3.14159 0.00159 3.14159" xyz="0.00000 0.00000 -0.17000"/>
+    <parent link="right_upper_arm"/>
+    <child link="right_lower_arm"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="r_shoulder_y_rjoint" type="revolute">
+    <limit lower="-0.52360" upper="3.14160" effort="30" velocity="1"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02100 -0.02300 0.03300"/>
+    <parent link="right_shoulder"/>
+    <child link="right_collarbone"/>
+    <axis xyz="0.00000 -1.00000 0.00000"/>
+  </joint>
+  <joint name="r_shoulder_z_rjoint" type="revolute">
+    <limit lower="-0.43630" upper="1.39630" effort="30" velocity="1"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.00500 -0.04500 0.23000"/>
+    <parent link="torso"/>
+    <child link="right_shoulder"/>
+    <axis xyz="0.00000 0.00000 1.00000"/>
+  </joint>
+  <joint name="r_upperarm_x_rjoint" type="revolute">
+    <limit lower="0" upper="1.22170" effort="30" velocity="1"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.07300 -0.02300"/>
+    <parent link="right_collarbone"/>
+    <child link="right_upper_arm"/>
+    <axis xyz="-1.00000 0.00000 0.00000"/>
+  </joint>
+  <joint name="r_wrist_x_rjoint" type="revolute">
+    <limit lower="-0.78000" upper="0.78000" effort="30" velocity="1"/>
+    <origin rpy="0.00000 -0.00000 0.00000" xyz="-0.00000 0.00000 -0.10000"/>
+    <parent link="right_wrist"/>
+    <child link="r_palm"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="r_wrist_z_rjoint" type="revolute">
+    <limit lower="-1.57100" upper="1.57100" effort="30" velocity="1"/>
+    <origin rpy="0.87260 0.00061 1.57028" xyz="-0.08043 0.00000 -0.06750"/>
+    <parent link="right_lower_arm"/>
+    <child link="right_wrist"/>
+    <axis xyz="0.00000 0.00000 1.00000"/>
+  </joint>
+  <joint name="world_to_base_link" type="fixed">
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+    <parent link="world"/>
+    <child link="torso"/>
+  </joint>
+  <link name="endeffector">
+    <visual name="endeffector_visual">
+      <origin rpy="-0.00000 0.00000 -0.00000" xyz="-0.00000 0.00000 0.00000"/>
+      <material name="phobos_collision"/>
+      <geometry>
+        <sphere radius="0.01000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="finger_segment:14">
+    <collision name="finger_segment:14_collision">
+      <origin rpy="0.00000 0.00000 -0.00000" xyz="-0.00618 -0.01551 -0.00742"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00541 0.00056 -0.00575"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="finger_segment:14_visual">
+      <origin rpy="0.00000 0.00000 -0.00000" xyz="-0.00618 -0.01551 -0.00742"/>
+      <material name="finger_segment:16_color"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="finger_segment:15">
+    <collision name="finger_segment:15_collision">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="-0.00618 -0.01551 -0.00742"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00541 0.00056 -0.00575"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="finger_segment:15_visual">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="-0.00618 -0.01551 -0.00742"/>
+      <material name="finger_segment:16_color"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="finger_segment:16">
+    <collision name="finger_segment:16_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00618 -0.01551 -0.00742"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00541 0.00056 -0.00575"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="finger_segment:16_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00618 -0.01551 -0.00742"/>
+      <material name="finger_segment:16_color"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="finger_segment:24">
+    <collision name="finger_segment:24_collision">
+      <origin rpy="0.00000 -0.00000 -0.00000" xyz="-0.01569 -0.01551 -0.00742"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00410 0.00056 -0.00575"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="finger_segment:24_visual">
+      <origin rpy="0.00000 -0.00000 -0.00000" xyz="-0.01569 -0.01551 -0.00742"/>
+      <material name="finger_segment:16_color"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="finger_segment:25">
+    <collision name="finger_segment:25_collision">
+      <origin rpy="0.00000 0.00000 -0.00000" xyz="-0.01569 -0.01551 -0.00742"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00410 0.00056 -0.00575"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="finger_segment:25_visual">
+      <origin rpy="0.00000 0.00000 -0.00000" xyz="-0.01569 -0.01551 -0.00742"/>
+      <material name="finger_segment:16_color"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="finger_segment:26">
+    <collision name="finger_segment:26_collision">
+      <origin rpy="0.00000 0.00000 -0.00000" xyz="-0.01569 -0.01551 -0.00742"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00410 0.00056 -0.00575"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="finger_segment:26_visual">
+      <origin rpy="0.00000 0.00000 -0.00000" xyz="-0.01569 -0.01551 -0.00742"/>
+      <material name="finger_segment:16_color"/>
+      <geometry>
+        <mesh filename="./finger_segment_ipt_50d2a7f4.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="fingertip:14">
+    <collision name="fingertip:14_collision">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="0.00551 0.00037 -0.01017"/>
+      <geometry>
+        <mesh filename="./fingertip_ipt_8417b8a9.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00501 0.00041 -0.01022"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="fingertip:14_visual">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="0.00551 0.00037 -0.01017"/>
+      <material name="fingertip:16_color"/>
+      <geometry>
+        <mesh filename="./fingertip_ipt_8417b8a9.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="fingertip:15">
+    <collision name="fingertip:15_collision">
+      <origin rpy="-0.00000 0.00000 -0.00000" xyz="0.00551 0.00037 -0.01017"/>
+      <geometry>
+        <mesh filename="./fingertip_ipt_8417b8a9.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00501 0.00041 -0.01022"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="fingertip:15_visual">
+      <origin rpy="-0.00000 0.00000 -0.00000" xyz="0.00551 0.00037 -0.01017"/>
+      <material name="fingertip:16_color"/>
+      <geometry>
+        <mesh filename="./fingertip_ipt_8417b8a9.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="fingertip:16">
+    <collision name="fingertip:16_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00551 0.00037 -0.01017"/>
+      <geometry>
+        <mesh filename="./fingertip_ipt_8417b8a9.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00501 0.00041 -0.01022"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="fingertip:16_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00551 0.00037 -0.01017"/>
+      <material name="fingertip:16_color"/>
+      <geometry>
+        <mesh filename="./fingertip_ipt_8417b8a9.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="gripper">
+    <collision name="gripper_collision">
+      <origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./finger.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="0.00000" iyy="0.00000" iyz="-0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00541 0.00056 -0.00575"/>
+      <mass value="0.00001"/>
+    </inertial>
+    <visual name="gripper_visual">
+      <origin rpy="0.00000 -0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="finger_color"/>
+      <geometry>
+        <mesh filename="./finger.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="head">
+    <collision name="head_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./head.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00142" ixy="0.00000" ixz="0.00008" iyy="0.00159" iyz="-0.00000" izz="0.00148"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.01525 -0.02377 0.09423"/>
+      <mass value="0.29414"/>
+    </inertial>
+    <visual name="head_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="head_color"/>
+      <geometry>
+        <mesh filename="./head.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_collarbone:11">
+    <collision name="left_collarbone:11_collision">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="-0.00032 -0.00028 0.00030"/>
+      <geometry>
+        <mesh filename="./left_upper_arm_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00001" ixy="0.00000" ixz="0.00000" iyy="0.00001" iyz="0.00000" izz="0.00002"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.04134 -0.00236"/>
+      <mass value="0.02481"/>
+    </inertial>
+    <visual name="left_collarbone:11_visual">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="-0.00032 -0.00028 0.00030"/>
+      <material name="left_collarbone:11_color"/>
+      <geometry>
+        <mesh filename="./left_upper_arm_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_lower_arm:11">
+    <inertial>
+      <inertia ixx="0.00010" ixy="-0.00000" ixz="-0.00000" iyy="0.00010" iyz="0.00000" izz="0.00002"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.02248 -0.08105"/>
+      <mass value="0.07679"/>
+    </inertial>
+    <visual name="left_lower_arm:11_visual">
+      <origin rpy="0.00000 -0.00000 -0.00000" xyz="0.00002 -0.01077 -0.12546"/>
+      <material name="left_lower_arm:11_color"/>
+      <geometry>
+        <mesh filename="./left_lowerarm_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_palm:11">
+    <collision name="left_palm:11_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02323 0.00191 0.01723"/>
+      <geometry>
+        <mesh filename="./left_palm_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00000" ixy="0.00000" ixz="-0.00000" iyy="0.00000" iyz="0.00000" izz="0.00000"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02720 0.00012 0.01719"/>
+      <mass value="0.00522"/>
+    </inertial>
+    <visual name="left_palm:11_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02323 0.00191 0.01723"/>
+      <material name="left_palm:11_color"/>
+      <geometry>
+        <mesh filename="./left_palm_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_shoulder">
+    <collision name="left_shoulder_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./right_shoulder.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00003" ixy="-0.00000" ixz="-0.00000" iyy="0.00003" iyz="0.00000" izz="0.00003"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00564 0.00088 0.03315"/>
+      <mass value="0.08404"/>
+    </inertial>
+    <visual name="left_shoulder_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="right_shoulder_color"/>
+      <geometry>
+        <mesh filename="./right_shoulder.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_upper_arm:11">
+    <inertial>
+      <inertia ixx="0.00085" ixy="0.00000" ixz="-0.00005" iyy="0.00085" iyz="0.00000" izz="0.00005"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02864 -0.00070 -0.08422"/>
+      <mass value="0.19239"/>
+    </inertial>
+    <visual name="left_upper_arm:11_visual">
+      <origin rpy="0.00000 -0.00000 0.00000" xyz="-0.04484 -0.00935 -0.16158"/>
+      <material name="left_upper_arm:11_color"/>
+      <geometry>
+        <mesh filename="./left_lower_arm_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_wrist:11">
+    <collision name="left_wrist:11_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00032 0.00662 0.07068"/>
+      <geometry>
+        <mesh filename="./left_wrist_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00004" ixy="0.00000" ixz="0.00000" iyy="0.00004" iyz="0.00001" izz="0.00001"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00007 -0.01105 0.06777"/>
+      <mass value="0.02836"/>
+    </inertial>
+    <visual name="left_wrist:11_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00032 0.00662 0.07068"/>
+      <material name="left_wrist:11_color"/>
+      <geometry>
+        <mesh filename="./left_wrist_simple.stl" scale="0.00100 0.00100 0.00100"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="neck">
+    <collision name="neck_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./neck.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00006" ixy="0.00000" ixz="0.00000" iyy="0.00006" iyz="-0.00000" izz="0.00002"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00027 0.05035"/>
+      <mass value="0.09044"/>
+    </inertial>
+    <visual name="neck_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="neck_color"/>
+      <geometry>
+        <mesh filename="./neck.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="r_palm">
+    <collision name="r_palm_collision">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./right_palm.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00001" ixy="0.00000" ixz="-0.00000" iyy="0.00002" iyz="0.00000" izz="0.00001"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02951 0.00225 -0.02397"/>
+      <mass value="0.00533"/>
+    </inertial>
+    <visual name="r_palm_visual">
+      <origin rpy="-0.00000 -0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
+      <material name="gripper_color"/>
+      <geometry>
+        <mesh filename="./right_palm.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_collarbone">
+    <collision name="right_collarbone_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./right_collar.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00001" ixy="0.00000" ixz="0.00000" iyy="0.00001" iyz="-0.00000" izz="0.00002"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.04135 -0.00236"/>
+      <mass value="0.02481"/>
+    </inertial>
+    <visual name="right_collarbone_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="right_collarbone_color"/>
+      <geometry>
+        <mesh filename="./right_collar.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_lower_arm">
+    <collision name="right_lower_arm_collision">
+      <origin rpy="0.00000 0.87260 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./right_lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00010" ixy="0.00000" ixz="0.00000" iyy="0.00010" iyz="-0.00000" izz="0.00002"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.02249 -0.08106"/>
+      <mass value="0.07679"/>
+    </inertial>
+    <visual name="right_lower_arm_visual">
+      <origin rpy="0.00000 0.87260 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="right_lower_arm_color"/>
+      <geometry>
+        <mesh filename="./right_lower_arm.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_shoulder">
+    <collision name="right_shoulder_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./right_shoulder.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00003" ixy="-0.00000" ixz="-0.00000" iyy="0.00003" iyz="0.00000" izz="0.00003"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00564 0.00088 0.03315"/>
+      <mass value="0.08404"/>
+    </inertial>
+    <visual name="right_shoulder_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="right_shoulder_color"/>
+      <geometry>
+        <mesh filename="./right_shoulder.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_upper_arm">
+    <collision name="right_upper_arm_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./right_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00085" ixy="0.00000" ixz="-0.00000" iyy="0.00085" iyz="-0.00001" izz="0.00005"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.02306 -0.00032 -0.08660"/>
+      <mass value="0.18973"/>
+    </inertial>
+    <visual name="right_upper_arm_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="right_upper_arm_color"/>
+      <geometry>
+        <mesh filename="./right_upper_arm.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_wrist">
+    <collision name="right_wrist_collision">
+      <origin rpy="-0.00000 0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="./right_wrist.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00004" ixy="-0.00000" ixz="0.00000" iyy="0.00006" iyz="-0.00001" izz="0.00003"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00003 -0.01106 -0.06750"/>
+      <mass value="0.02840"/>
+    </inertial>
+    <visual name="right_wrist_visual">
+      <origin rpy="-0.00000 0.00000 0.00000" xyz="0.00000 -0.00000 0.00000"/>
+      <material name="right_wrist_color"/>
+      <geometry>
+        <mesh filename="./right_wrist.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="torso">
+    <visual name="torso_visual">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <material name="torso_color"/>
+      <geometry>
+        <mesh filename="./torso.stl" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="world"/>
+  <material name="finger_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="finger_segment:16_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="fingertip:16_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="gripper_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="head_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="left_collarbone:11_color">
+    <color rgba="0.17647 0.17647 0.17647 1.00000"/>
+  </material>
+  <material name="left_lower_arm:11_color">
+    <color rgba="0.17647 0.17647 0.17647 1.00000"/>
+  </material>
+  <material name="left_palm:11_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="left_upper_arm:11_color">
+    <color rgba="0.17647 0.17647 0.17647 1.00000"/>
+  </material>
+  <material name="left_wrist:11_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="neck_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="phobos_collision">
+    <color rgba="0.80000 0.49804 0.00000 0.20000"/>
+  </material>
+  <material name="right_collarbone_color">
+    <color rgba="0.17647 0.17647 0.17647 1.00000"/>
+  </material>
+  <material name="right_lower_arm_color">
+    <color rgba="0.17647 0.17647 0.17647 1.00000"/>
+  </material>
+  <material name="right_shoulder_color">
+    <color rgba="0.17647 0.17647 0.17647 1.00000"/>
+  </material>
+  <material name="right_upper_arm_color">
+    <color rgba="0.17647 0.17647 0.17647 1.00000"/>
+  </material>
+  <material name="right_wrist_color">
+    <color rgba="0.74902 0.74902 0.74902 1.00000"/>
+  </material>
+  <material name="torso_color">
+    <color rgba="0.26667 0.26667 0.26667 1.00000"/>
+  </material>
+</robot>
