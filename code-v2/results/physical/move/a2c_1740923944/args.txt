@@ -1,0 +1,1 @@
+Namespace(num_runs=3, actor_hidden=[64, 64], critic_hidden=[64, 64], optim='rms', lr=0.0001)

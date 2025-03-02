@@ -135,7 +135,7 @@ class BlocksWorld(SymbolicEnvironment):
         self.semantics.set_false(Block(self._table), self._invalid_state)
 
     def _init_all_states(self) -> None:
-        _all_states = set()
+        all_states = set()
         
         for permutation in itertools.permutations(self._blocks):
             for stacking in itertools.product(range(2), repeat=len(self._blocks) - 1):
@@ -150,10 +150,10 @@ class BlocksWorld(SymbolicEnvironment):
                         raw_state.append(tuple(stack))
                         stack = []
                 
-                _all_states.add(tuple(sorted(raw_state)))
+                all_states.add(tuple(sorted(raw_state)))
 
         self.all_states = [self._parse_raw_state([list(stack) for stack in s])
-                           for s in _all_states]
+                           for s in all_states]
         self.all_states.append(self._invalid_state)
 
     def _generate_random_state(self) -> Valuation:
@@ -296,7 +296,7 @@ class BlocksWorld(SymbolicEnvironment):
         return observation, reward, terminated, truncated, info
 
     def reset(self, *, seed: int | None = None, options: Dict[str, Any] | None = None) -> Tuple[Valuation, Dict[str, Any]]:
-        super().reset(seed=seed)
+        super().reset(seed=seed, options=options)
 
         if options is not None and "initial_state" in options:
             self._initial_state = self._parse_raw_state(options["initial_state"])

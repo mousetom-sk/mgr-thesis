@@ -18,7 +18,7 @@ from nesyrl.util.collecting import SuccessCollector
 
 
 # TODO: when planning, do extra reset after seed
-
+# TODO: float32 (?)
 
 def log_params(ep: int, actor_path: str, critic_path: str) -> None:
     with open(actor_path, "a") as out:

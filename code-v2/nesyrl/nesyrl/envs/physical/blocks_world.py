@@ -2,6 +2,8 @@ from typing import Tuple, List, Dict, Any
 from numpy.typing import NDArray
 
 import os
+import itertools
+from abc import abstractmethod
 
 import numpy as np
 import pybullet as pb
@@ -9,41 +11,42 @@ import pybullet_utils.bullet_client as pbc
 import pybullet_data as pbd
 from gymnasium import spaces
 
-from .base import PhysicalEnvironment, PhysicalAction, PhysicalObservation
-from .util import *
+from nesyrl.envs.physical.base import PhysicalEnvironment, PhysicalAction, PhysicalObservation
+from nesyrl.envs.physical.util import *
+from nesyrl.util import spaces as uspaces
 
 
-class SimulatedNicoBlocksWorld(PhysicalEnvironment):
+class NicoBlocksWorldBase(PhysicalEnvironment):
 
     metadata = {"render_modes": ["human"]}
 
     eeff_obs_key = "eeff"
+    goal_obs_key = "goal"
     render_mode: str | None
 
     _table = "table"
 
     _horizon: int
-    _goal_state: List[List[str]]
-    _initial_state: List[List[str]]
     _current_step: int
-    _was_action_valid: bool
+    _current_blocks_state: List[List[str]]
+    _all_blocks_states: List[List[List[str]]]
 
     _pbc: pbc.BulletClient
     _static_objects: Dict[str, int]
     _blocks: Dict[str, int]
+    _goal: int
     _init_pbc_state: int
     
     _robot: int
     _eeff: int
-    _eeff_name = "right_palm:11"
+    _eeff_name = "endeffector"
     _active_joints: List[int]
-    _active_joints_lb: List[float]
-    _active_joints_ub: List[float]
-    _active_joints_mf: List[float]
-    _active_joints_mv: List[float]
+    _active_joints_lb: NDArray
+    _active_joints_ub: NDArray
+    _active_joints_mf: NDArray
+    _active_joints_mv: NDArray
 
-    _grasped_block: int | None = None
-    _grasp_constraint: int
+    _epsilon_velocity = 1e-4
 
     _pb_data_dir = pbd.getDataPath()
     _models_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "models")
@@ -76,35 +79,51 @@ class SimulatedNicoBlocksWorld(PhysicalEnvironment):
     }
 
     _robot_init = {
-        "fileName": os.path.join(_models_dir, "robots", "nico", "upper_right_arm_only_fixed_hand.urdf"),
+        "fileName": os.path.join(_models_dir, "robots", "nico", "nico_upper_rh6d.urdf"),
         "basePosition": [-0.1, 0, 0.65],
         "baseOrientation": pb.getQuaternionFromEuler([0, 0, 0])
     }
 
+    _goal_init = {
+        "fileName": os.path.join(_models_dir, "objects", "goal_area.urdf"),
+        "globalScaling": 0.8
+    }
+
+    _goal_color = [0.0, 1.0, 0.0, 0.25]
+    _transparent = [0.0, 1.0, 0.0, 0.0]
+
+    _blocks_x = 0.25
+    _blocks_y_start = -0.14
+    _blocks_y_delta = 0.05 * _block_init["globalScaling"] * 3 / 2
+    _blocks_z_start = 0.645
+    _blocks_z_delta = 0.05 * _block_init["globalScaling"]
+
+    _goal_x_shift = (- 0.05 * _block_init["globalScaling"] / 2
+                     - 0.025 * _goal_init["globalScaling"] / 2)
+
     def __init__(
         self, horizon: int, blocks: List[str],
-        goal_state: List[List[str]], initial_state: List[List[str]] | None = None,
-        render_mode: str | None = "human"
+        highlighting: bool = True, render_mode: str | None = "human"
     ) -> None:
         super().__init__()
 
-        if self.eeff_obs_key in blocks:
-            raise ValueError(f"No block can be named {self.eeff_obs_key}")
-        
-        if self._table in blocks:
-            raise ValueError(f"No block can be named {self._table}")
+        unknown_blocks = set(blocks) - set(self._block_colors)
+
+        if len(unknown_blocks) > 0:
+            raise ValueError(f"Unknown blocks: {unknown_blocks}")
         
         self._horizon = horizon
-        self._goal_state = goal_state
-        self._initial_state = initial_state
         self.render_mode = render_mode
 
         self._init_pybullet()
         self._init_static_objects()
         self._init_blocks(blocks)
+        self._init_goal(highlighting)
         self._init_robot()
 
-        self._load_active_joints_and_eeff()
+        self._init_all_blocks_states()
+
+        self._load_active_joints_and_eeff(highlighting)
         self._init_action_space()
         self._init_observation_space()
 
@@ -148,12 +167,56 @@ class SimulatedNicoBlocksWorld(PhysicalEnvironment):
             self._pbc.changeVisualShape(self._blocks[b], -1,
                                         rgbaColor=self._block_colors[b])
     
+    def _init_goal(self, highlighting: bool) -> None:
+        self._goal = self._pbc.loadURDF(useMaximalCoordinates=True,
+                                        **self._goal_init)
+        
+        color = self._goal_color if highlighting else self._transparent
+        self._pbc.changeVisualShape(self._goal, -1, rgbaColor=color)
+    
     def _init_robot(self) -> None:
         self._robot = self._pbc.loadURDF(useFixedBase=True,
-                                         flags=pb.URDF_MERGE_FIXED_LINKS | pb.URDF_USE_SELF_COLLISION,
+                                         flags=pb.URDF_USE_SELF_COLLISION,
                                          **self._robot_init)
 
-    def _load_active_joints_and_eeff(self) -> None:
+    def _init_all_blocks_states(self) -> None:
+        all_states = set()
+        
+        for permutation in itertools.permutations(self._blocks):
+            for stacking in itertools.product(range(2), repeat=len(self._blocks) - 1):
+                stacking = list(stacking) + [1]
+                partial_state = []
+                stack = []
+
+                for block, end_stack in zip(permutation, stacking):
+                    stack.append(block)
+
+                    if end_stack:
+                        partial_state.append(tuple(stack))
+                        stack = []
+
+                free_bases = len(self._block_colors) - len(partial_state)
+
+                if free_bases == 0:
+                    all_states.add(tuple(partial_state))
+                    continue
+
+                for ids in itertools.combinations(range(len(self._block_colors)), free_bases):
+                    partial_copy = list(partial_state)
+                    state = []
+
+                    for i in range(len(self._block_colors)):
+                        if i in ids:
+                            state.append(tuple())
+                        else:
+                            state.append(partial_copy.pop())
+                
+                    all_states.add(tuple(state))
+
+        self._all_blocks_states = [[list(stack) for stack in s]
+                                   for s in all_states]
+    
+    def _load_active_joints_and_eeff(self, highlighting: bool) -> None:
         self._active_joints = []
         self._active_joints_lb = []
         self._active_joints_ub = []
@@ -167,6 +230,10 @@ class SimulatedNicoBlocksWorld(PhysicalEnvironment):
 
             if self._eeff_name in str(joint_info[12]):
                 self._eeff = id
+
+                if not highlighting:
+                    self._pbc.changeVisualShape(self._robot, self._eeff,
+                                                rgbaColor=self._transparent)
 
             if joint_info[2] == pb.JOINT_FIXED:
                 continue
@@ -183,38 +250,28 @@ class SimulatedNicoBlocksWorld(PhysicalEnvironment):
         self._active_joints_mv = np.array(self._active_joints_mv)
 
     def _init_action_space(self) -> None:
-        self.action_space = spaces.OneOf([
-            spaces.Discrete(2),
-            spaces.Box(self._active_joints_lb, self._active_joints_ub, dtype=float)
-        ])
+        self.action_space = spaces.Box(self._active_joints_lb,
+                                       self._active_joints_ub,
+                                       dtype=float)
 
     def _init_observation_space(self) -> None:
-        # self.observation_space = spaces.Dict(
-        #     {b: spaces.Box(-np.inf, np.inf, shape=(7,), dtype=float) for b in self._blocks}
-        #     | {self.eeff_obs_key: spaces.Box(-np.inf, np.inf, shape=(7,), dtype=float)}
-        # )
-
         self.observation_space = spaces.Dict(
             {b: spaces.Box(-np.inf, np.inf, shape=(7,), dtype=float) for b in self._blocks}
-            | {f"joint_{id}": spaces.Box(-np.inf, np.inf, dtype=float) for id in self._active_joints}
+            | {f"joint_{id}": uspaces.Float(-np.inf, np.inf) for id in self._active_joints}
             | {self.eeff_obs_key: spaces.Box(-np.inf, np.inf, shape=(7,), dtype=float)}
+            | {self.goal_obs_key: spaces.Box(-np.inf, np.inf, shape=(7,), dtype=float)}
         )
 
     def _perform_action(self, action: PhysicalAction) -> None:
-        if action[0] == 0:
-            self._perform_gripper_action(action[1])
-        else:
-            self._perform_joints_action(action[1])
-
-        self._current_step += 1
-        self._pbc.stepSimulation()
-    
-    def _perform_joints_action(self, action: PhysicalAction) -> None:
         # joints_state = np.array([self._pbc.getJointState(self._robot, id)[0]
         #                          for id in self._active_joints])
         # action *= np.pi
         # action /= 180
-        action = np.clip(action, self._active_joints_lb, self._active_joints_ub)
+        
+        # joints_range = self._active_joints_ub - self._active_joints_lb
+        # joints_mid = self._active_joints_ub + self._active_joints_lb / 2
+        # action *= joints_range / 2
+        # action += joints_mid
         
         for i in range(len(self._active_joints)):
             self._pbc.setJointMotorControl2(bodyUniqueId=self._robot,
@@ -225,172 +282,294 @@ class SimulatedNicoBlocksWorld(PhysicalEnvironment):
                                             maxVelocity=self._active_joints_mv[i],
                                             positionGain=0.7,
                                             velocityGain=0.3)
+
+        self._current_step += 1
+        self._pbc.stepSimulation()
+    
+    def _get_observation(self) -> PhysicalObservation:
+        observation = {}
         
-        # self._pbc.setJointMotorControlArray(self._robot,
-        #                                     self._active_joints,
-        #                                     pb.POSITION_CONTROL,
-        #                                     targetPositions=action,
-        #                                     forces=self._active_joints_mf,
-        #                                     positionGains=[0.7]*len(self._active_joints),
-        #                                     velocityGains=[0.3]*len(self._active_joints))
-
-    def _perform_gripper_action(self, action: int) -> None:
-        if action == 0:
-            self._perform_grasp()
-        else:
-            self._perform_release()
-
-    def _perform_grasp(self) -> None:
-        if self._grasped_block is not None:
-            self._was_action_valid = False
-            return
-        
-        block_id = self._find_closest_graspable_block()
-
-        if block_id is None:
-            self._was_action_valid = False
-            return
-        
-        self._grasp_block(block_id)
-
-    def _find_closest_graspable_block(self) -> int | None:
         pos_eeff, orn_eeff = self._pbc.getLinkState(self._robot, self._eeff)[:2]
         inv_pos_eeff, inv_orn_eeff = self._pbc.invertTransform(pos_eeff, orn_eeff)
 
-        graspable = {}
-
-        for block, id in self._blocks.items():
-            pos, orn = self._pbc.getBasePositionAndOrientation(id)
-            block_in_eeff = np.array(
-                self._pbc.multiplyTransforms(inv_pos_eeff, inv_orn_eeff, pos, orn)[0]
-            )
-
-            if self._is_top(block) and self._can_grasp(block_in_eeff):
-                graspable[id] = squared_length(block_in_eeff)
-
-        if len(graspable) == 0:
-            return None
-
-        return sorted(graspable, key=lambda b: graspable[b])[0]
-    
-    def _grasp_block(self, block_id: int) -> None:
-        self._grasped_block = block_id
-
-        pos_eeff, orn_eeff = self._pbc.getLinkState(self._robot, self._eeff)[:2]
-        rel_pos, rel_orn = [-0.025, 0.045, -0.035], [0, 0, 0, 1]
-        pos, orn = self._pbc.multiplyTransforms(pos_eeff, orn_eeff, rel_pos, rel_orn)
-        
-        self._pbc.resetBasePositionAndOrientation(block_id, pos, orn)
-        self._grasp_constraint = self._pbc.createConstraint(
-            self._robot, self._eeff, block_id, -1, pb.JOINT_FIXED,
-            [0, 0, 0], rel_pos, [0, 0, 0], rel_orn, [0, 0, 0, 1]
+        observation[self.eeff_obs_key] = np.concatenate(
+            [np.array(v) for v in (pos_eeff, orn_eeff)]
         )
 
-    def _perform_release(self) -> None:
-        if self._grasped_block is None:
-            self._was_action_valid = False
-            return
+        for b in self._blocks:
+            pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[b])
+            block_in_eeff = self._pbc.multiplyTransforms(inv_pos_eeff, inv_orn_eeff, pos, orn)
+            observation[b] = np.concatenate([np.array(v) for v in block_in_eeff])
         
-        table_position = self._find_closest_table_position()
+        for id in self._active_joints:
+            joint_state = self._pbc.getJointState(self._robot, id)
+            observation[f"joint_{id}"] = joint_state[0]
 
-        if table_position is not None:
-            self._place_grasped_block_on_table(table_position)
-            return
+        return observation
 
-        block_id = self._find_closest_target_block()
-
-        if block_id is None:
-            self._was_action_valid = False
-            return
+    def _is_moving_block(self) -> bool:
+        velocities = list(self._pbc.getBaseVelocity(id)[0]
+                          for id in self._blocks.values())
         
-        self._stack_grasped_block(block_id)
+        return any(squared_length(v) >= (self._epsilon_velocity ** 2)
+                   for v in velocities)
 
-    def _find_closest_table_position(self) -> NDArray | None:
-        ray_start, orn = self._pbc.getLinkState(self._robot, self._eeff)[:2]
-        ray_end = self._pbc.multiplyTransforms(ray_start, orn, [0, 0.15, 0], [0, 0, 0, 1])[0]
-        obj = self._pbc.rayTest(ray_start, ray_end)[0]
+    def _is_robot_collision(self) -> bool:
+        cps = self._pbc.getContactPoints(self._robot)
+    
+        return any(cp[8] < 0 for cp in cps)
+    
+    def _generate_random_blocks_state(self) -> List[List[str]]:
+        state_index = self.np_random.integers(len(self._all_blocks_states))
+        state = self._all_blocks_states[state_index]
 
-        if obj[0] == self._static_objects["table"]:
-            return np.array(obj[3])
-        
-        return None
-
-    def _place_grasped_block_on_table(self, position: NDArray) -> None:
-        pos = position + np.array([0, 0, 0.02])
+        return state
+    
+    def _set_blocks_state(self, state: List[List[str]]) -> None:
         orn = [0, 0, 0, 1]
+        velocity = [0, 0, 0]
+        bottom_x = self._blocks_x
+        bottom_y = self._blocks_y_start
+        bottom_z = self._blocks_z_start
+        
+        for stack in state:
+            pos = np.array([bottom_x, bottom_y, bottom_z])
 
-        self._pbc.resetBasePositionAndOrientation(self._grasped_block, pos, orn)
-        self._pbc.removeConstraint(self._grasp_constraint)
-        self._grasped_block = None
+            for i, b in enumerate(stack):
+                z_offset = i * np.array([0, 0, self._blocks_z_delta])
 
-    def _find_closest_target_block(self) -> int | None:
+                self._pbc.resetBasePositionAndOrientation(self._blocks[b],
+                                                          pos + z_offset,
+                                                          orn)
+
+                self._pbc.resetBaseVelocity(self._blocks[b], velocity, velocity)
+
+            bottom_y += self._blocks_y_delta
+    
+    @abstractmethod
+    def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
+        pass
+
+    def create_snapshot(self) -> Any:
+        snapshot = {
+            "current_step": self._current_step,
+            "pbc_state": self._pbc.saveState()
+        }
+
+        return snapshot
+    
+    def restore_snapshot(self, snapshot: Any) -> PhysicalObservation:
+        self._current_step = snapshot["current_step"]
+
+        self._pbc.restoreState(snapshot["pbc_state"])
+
+        return self._get_observation()
+    
+    def step(self, action: PhysicalAction) -> Tuple[PhysicalObservation, float, bool, bool, Dict[str, Any]]:
+        self._perform_action(action)
+        observation = self._get_observation()
+        reward, terminated, truncated, info = self._evaluate_last_transition()
+        
+        return observation, reward, terminated, truncated, info
+    
+    def reset(self, *, seed: int | None = None, options: Dict[str, Any] | None = None) -> Tuple[PhysicalObservation, Dict[str, Any]]:
+        super().reset(seed=seed, options=options)
+
+        self._pbc.restoreState(self._init_pbc_state)
+
+        self._current_blocks_state = self._generate_random_blocks_state()
+        self._set_blocks_state(self._current_blocks_state)
+
+        self._current_step = 0
+        observation = self._get_observation()
+
+        return observation, {}
+        
+    def close(self) -> None:
+        self._pbc.disconnect()
+
+
+class NicoBlocksWorldMove(NicoBlocksWorldBase):
+
+    closest_obs_key = "closest"
+
+    _home = "home"
+    _subgoal_idx: int
+    _subgoals: List[str]
+    _last_dist_to_goal: float
+
+    _home_pos = [0.12, -0.14, 0.93]
+
+    def __init__(
+        self, horizon: int, blocks: List[str],
+        highlighting: bool = True, render_mode: str | None = "human"
+    ) -> None:
+        super().__init__(horizon, blocks, highlighting, render_mode)
+
+        self._subgoal_idx = 0
+        self._subgoals = []
+
+    def _init_observation_space(self) -> None:
+        size = 3 + 3 + 3 + len(self._active_joints)
+        self.observation_space = spaces.Box(-np.inf, np.inf, shape=(size,), dtype=float)
+
+    def _get_observation(self) -> PhysicalObservation:
         pos_eeff, orn_eeff = self._pbc.getLinkState(self._robot, self._eeff)[:2]
         inv_pos_eeff, inv_orn_eeff = self._pbc.invertTransform(pos_eeff, orn_eeff)
 
-        target = {}
+        block_postions = []
 
-        for block, id in self._blocks.items():
-            if id == self._grasped_block:
+        for b in self._blocks:
+            if self._subgoal_idx < len(self._subgoals) and b == self._subgoals[self._subgoal_idx]:
                 continue
 
-            pos, orn = self._pbc.getBasePositionAndOrientation(id)
-            block_in_eeff = np.array(
-                self._pbc.multiplyTransforms(inv_pos_eeff, inv_orn_eeff, pos, orn)[0]
-            )
+            pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[b])
+            block_in_eeff = self._pbc.multiplyTransforms(inv_pos_eeff, inv_orn_eeff, pos, orn)
+            block_postions.append((block_in_eeff[0], pos))
 
-            if self._is_top(block) and self._can_stack(block_in_eeff):
-                target[id] = squared_length(block_in_eeff)
+        pos_closest = sorted(block_postions, key=lambda x: squared_length(x[0]))[0][1]
+        pos_goal = self._pbc.getBasePositionAndOrientation(self._goal)[0]
 
-        if len(target) == 0:
-            return None
+        joints_state = [self._pbc.getJointState(self._robot, id)[0]
+                        for id in self._active_joints]
 
-        return sorted(target, key=lambda b: target[b])[0]
+        observation = np.concatenate([np.array(pos_eeff),
+                                      np.array(pos_goal),
+                                      np.array(pos_closest),
+                                      np.array(joints_state)])
+
+        return observation
+
+    def _generate_random_move(self) -> List[str]:
+        subgoals = []
+        valid_moves = []
+
+        for i, stack1 in enumerate(self._current_blocks_state):
+            if len(stack1) == 0:
+                continue
+            
+            block = stack1[-1]
+            on_table = len(stack1) == 1
+
+            for j, stack2 in enumerate(self._current_blocks_state):
+                if j == i or (on_table and len(stack2) == 0):
+                    continue
+
+                if len(stack2) == 0:
+                    valid_moves.append((block, f"{self._table}{j}"))
+                else:
+                    valid_moves.append((block, stack2[-1]))
+
+        subgoals.extend(self.np_random.choice(valid_moves))
+
+        subgoals.append(self._home)
+
+        return subgoals
     
-    def _stack_grasped_block(self, block_id: int) -> None:
-        base_pos, base_orn = self._pbc.getBasePositionAndOrientation(block_id)
-        rel_pos, rel_orn = [0, 0, 0.04], [0, 0, 0, 1]
-        pos, orn = self._pbc.multiplyTransforms(base_pos, base_orn, rel_pos, rel_orn)
+    def _activate_subgoal(self, subgoal: str) -> None:
+        if subgoal in self._blocks:
+            pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[subgoal])
+            rel_pos, rel_orn = [self._goal_x_shift, 0, 0], [0, 0, 0, 1]
 
-        self._pbc.resetBasePositionAndOrientation(block_id, pos, orn)
-        self._pbc.removeConstraint(self._grasp_constraint)
-        self._grasped_block = None
+            goal_pos, goal_orn = self._pbc.multiplyTransforms(pos, orn, rel_pos, rel_orn)
+        elif subgoal.startswith(self._table):
+            i = int(subgoal[len(self._table):])
 
-    def _dist_to_gripper(self, block: str) -> float:
+            pos = [self._blocks_x,
+                   self._blocks_y_start + i * self._blocks_y_delta,
+                   self._blocks_z_start]
+            orn = [0, 0, 0, 1]
+            rel_pos, rel_orn = [self._goal_x_shift, 0, 0], [0, 0, 0, 1]
+
+            goal_pos, goal_orn = self._pbc.multiplyTransforms(pos, orn, rel_pos, rel_orn)
+        else:
+            goal_pos, goal_orn = self._home_pos, [0, 0, 0, 1]
+
+        self._pbc.resetBasePositionAndOrientation(self._goal, goal_pos, goal_orn)
+
+    def _get_distance_to_goal(self) -> float:
         pos_eeff, orn_eeff = self._pbc.getLinkState(self._robot, self._eeff)[:2]
-        rel_pos, rel_orn = [-0.025, 0.045, -0.035], [0, 0, 0, 1] # [-0.025, 0.08, -0.04], [0, 0, 0, 1]
-        pos, orn = self._pbc.multiplyTransforms(pos_eeff, orn_eeff, rel_pos, rel_orn)
-        inv_pos, inv_orn = self._pbc.invertTransform(pos, orn)
+        inv_pos_eeff, inv_orn_eeff = self._pbc.invertTransform(pos_eeff, orn_eeff)
 
-        id = self._blocks[block]
-        pos, orn = self._pbc.getBasePositionAndOrientation(id)
-        block_in_eeff = self._pbc.multiplyTransforms(inv_pos, inv_orn, pos, orn)
-
-        dist = length(np.array(block_in_eeff[0]))
+        pos_goal, orn_goal = self._pbc.getBasePositionAndOrientation(self._goal)
+        goal_in_eeff = self._pbc.multiplyTransforms(inv_pos_eeff, inv_orn_eeff,
+                                                    pos_goal, orn_goal)
         
-        # if not (block_in_eeff[2] < 0 and block_in_eeff[1] > 0):
-        #     dist *= 10
+        return length(goal_in_eeff[0])
 
-        return dist
+    def _is_current_subgoal_achieved(self) -> bool:
+        aabb_min, aabb_max = self._pbc.getAABB(self._goal)
+        pos_eeff = self._pbc.getLinkState(self._robot, self._eeff)[0]
 
-    def _can_grasp(self, block_in_eeff: NDArray) -> bool:
-        return (squared_length(block_in_eeff) < (0.09 ** 2)
-                and block_in_eeff[2] < 0 and block_in_eeff[1] > 0
-                and -0.05 < block_in_eeff[0] < 0)
+        return all(aabb_min[i] < pos_eeff[i] < aabb_max[i] for i in range(3))
+
+    def _move_block(self, block: str, to: str) -> None:
+        orn = [0, 0, 0, 1]
+        velocity = [0, 0, 0]
+        
+        if to in self._blocks:
+            pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[to])
+            rel_pos, rel_orn = [0, 0, self._blocks_z_delta], [0, 0, 0, 1]
+
+            pos, orn = self._pbc.multiplyTransforms(pos, orn, rel_pos, rel_orn)
+        else:
+            i = int(to[len(self._table):])
+
+            pos = [self._blocks_x,
+                   self._blocks_y_start + i * self._blocks_y_delta,
+                   self._blocks_z_start]
+
+        self._pbc.resetBasePositionAndOrientation(self._blocks[block], pos, orn)
+        self._pbc.resetBaseVelocity(self._blocks[block], velocity, velocity)
+
+    def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
+        invalid = self._is_moving_block() or self._is_robot_collision()
+
+        if invalid:
+            return -0.1, True, False, {"is_goal": False}
+        
+        dist_to_goal = self._get_distance_to_goal()
+        delta = self._last_dist_to_goal - dist_to_goal
     
-    def _can_stack(self, block_in_eeff: NDArray) -> bool:
-        return (squared_length(block_in_eeff) < (0.15 ** 2)
-                and block_in_eeff[2] < 0 and block_in_eeff[1] > 0)
+        if self._is_current_subgoal_achieved():
+            self._subgoal_idx += 1
+            
+            if self._subgoal_idx < len(self._subgoals):
+                self._activate_subgoal(self._subgoals[self._subgoal_idx])
+            
+            if self._subgoal_idx == len(self._subgoals) - 1:
+                self._move_block(self._subgoals[0], self._subgoals[1])
+
+        self._last_dist_to_goal = self._get_distance_to_goal()
+        
+        is_goal = self._subgoal_idx >= len(self._subgoals)
+        truncated = self._current_step >= self._horizon
+        reward = 1.0 if is_goal else delta
+        
+        return reward, is_goal, truncated, {"is_goal": is_goal}
+
+    def create_snapshot(self):
+        return super().create_snapshot() | {"subgoals": list(self._subgoals)}
     
-    def _get_keyboard_gripper(self) -> int:
-        keypresses = self._pbc.getKeyboardEvents()
+    def restore_snapshot(self, snapshot):
+        super().restore_snapshot(snapshot)
+
+        self._subgoals = list(snapshot["subgoals"])
+
+        return self._get_observation()
         
-        if keypresses.get(65297, pb.KEY_IS_DOWN) == pb.KEY_WAS_RELEASED: # UP
-            return 0
-        
-        if keypresses.get(65298, pb.KEY_IS_DOWN) == pb.KEY_WAS_RELEASED: # DOWN
-            return 1
-        
-        return -1
+    def reset(self, *, seed: int | None = None, options: Dict[str, Any] | None = None) -> Tuple[PhysicalObservation, Dict[str, Any]]:
+        obs, info = super().reset(seed=seed, options=options)
+
+        self._subgoal_idx = 0
+        self._subgoals = self._generate_random_move()
+        self._activate_subgoal(self._subgoals[self._subgoal_idx])
+
+        self._last_dist_to_goal = self._get_distance_to_goal()
+
+        return obs, info
+    
+
     
     def _get_keyboard_eeff_delta(self) -> NDArray:
         keypresses = self._pbc.getKeyboardEvents()
@@ -413,188 +592,8 @@ class SimulatedNicoBlocksWorld(PhysicalEnvironment):
             delta_x -= step
 
         return np.array([delta_x, delta_y, delta_z])
-    
-    def _get_observation(self) -> PhysicalObservation:
-        observation = {}
-        
-        pos_eeff, orn_eeff = self._pbc.getLinkState(self._robot, self._eeff)[:2]
-        rel_pos, rel_orn = [-0.025, 0.045, -0.035], [0, 0, 0, 1]
-        pos_eeff, orn_eeff = self._pbc.multiplyTransforms(pos_eeff, orn_eeff, rel_pos, rel_orn)
-        inv_pos_eeff, inv_orn_eeff = self._pbc.invertTransform(pos_eeff, orn_eeff)
 
-        observation[self.eeff_obs_key] = np.concatenate([np.array(v) for v in (pos_eeff, orn_eeff)])
-
-        for b in self._blocks:
-            pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[b])
-            block_in_eeff = self._pbc.multiplyTransforms(inv_pos_eeff, inv_orn_eeff, pos, orn)
-            observation[b] = np.concatenate([np.array(v) for v in block_in_eeff])
-        
-        for id in self._active_joints:
-            joint_state = self._pbc.getJointState(self._robot, id)
-            observation[f"joint_{id}_pos"] = joint_state[0]
-            # observation[f"joint_{id}_vel"] = joint_state[1]
-
-        # pos_orn = self._pbc.getLinkState(self._robot, self._eeff)[:2]
-        # observation[self.eeff_obs_key] = np.concatenate([np.array(v) for v in pos_orn])
-
-        return observation
-
-    def _is_moving_block(self) -> bool:
-        velocities = list(self._pbc.getBaseVelocity(id)[0]
-                          for id in self._blocks.values()
-                          if (self._grasped_block is None or id != self._grasped_block))
-        
-        return any(squared_length(v) >= (0.0001 ** 2) for v in velocities)
-
-    def _is_robot_collision(self) -> bool:
-        cps = self._pbc.getContactPoints(self._robot)
-        cps = list(filter(lambda cp: cp[8] < 0, cps))
-    
-        if self._grasped_block is None:
-            return len(cps) > 0
-        
-        cps = list(filter(lambda cp: cp[2] != self._grasped_block, cps))
-        
-        if len(cps) > 0:
-            return True
-        
-        cps = self._pbc.getContactPoints(self._grasped_block)
-        cps = list(filter(lambda cp: cp[8] < 0 and cp[2] != self._robot, cps))
-        
-        return len(cps) > 0
-    
-    def _is_goal(self) -> bool:
-        for stack in self._goal_state:
-            if not self._is_on(stack[0], self._table):
-                return False
-            
-            for above, below in zip(stack[1:], stack):
-                if not self._is_on(above, below):
-                    return False
-
-        return True
-    
-    def _is_top(self, block: str) -> bool:
-        return all(not self._is_on(other, block)
-                   for other in self._blocks if other != block)
-
-    def _is_on(self, above: str, below: str) -> bool:
-        if below == self._table:
-            cps = self._pbc.getContactPoints(self._blocks[above], self._static_objects[self._table])
-        else:
-            cps = self._pbc.getContactPoints(self._blocks[above], self._blocks[below])
-        
-        cps = list(filter(lambda cp: cp[8] < 0, cps))
-        
-        if len(cps) == 0:
-            return False
-        
-        return all(is_main_component(np.array(cp[7]), SignedComponent.Z_POS)
-                   for cp in cps)
-    
-    def _generate_initial_blocks_state(self) -> List[List[str]]:
-        state = self._initial_state
-        invalid = state is None
-
-        while invalid:
-            state = self._generate_random_blocks_state()
-            invalid = self._goal_state == state
-        
-        return list(state)
-
-    def _generate_random_blocks_state(self) -> List[List[str]]:
-        shuffled_blocks = self.np_random.permutation(list(self._blocks))
-        stack_ends = np.concatenate((self.np_random.integers(2, size=len(self._blocks) - 1),
-                                     np.array([1])))
-
-        blocks_state = []
-        stack = []
-
-        for (block, end_stack) in zip(shuffled_blocks, stack_ends):
-            stack.append(block)
-
-            if end_stack:
-                blocks_state.append(stack)
-                stack = []
-
-        return blocks_state
-    
-    def _set_blocks_state(self, state: List[List[str]]) -> None:
-        bottom_x_space = spaces.Box(0.20, 0.23, dtype=float)
-        bottom_y_start_space = spaces.Box(-0.1, -0.08, dtype=float)
-        bottom_y_delta_space = spaces.Box(0.06, 0.08, dtype=float)
-
-        orn = [0, 0, 0, 1]
-        velocity = [0, 0, 0]
-        bottom_x = bottom_x_space.sample()[0]
-        bottom_y = bottom_y_start_space.sample()[0]
-        bottom_z = 0.645
-        
-        for stack in state:
-            pos = np.array([bottom_x, bottom_y, bottom_z])
-
-            for i, b in enumerate(stack):
-                z_offset = i * np.array([0, 0, 0.04])
-
-                self._pbc.resetBasePositionAndOrientation(self._blocks[b],
-                                                          pos + z_offset,
-                                                          orn)
-
-                self._pbc.resetBaseVelocity(self._blocks[b], velocity, velocity)
-            
-            bottom_x = bottom_x_space.sample()[0]
-            bottom_y += bottom_y_delta_space.sample()[0]
-    
-    def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
-        invalid = (not self._was_action_valid or self._is_moving_block()
-                   or self._is_robot_collision())
-
-        if invalid:
-            return -1.0, True, False, {"is_goal": False, "is_valid": False}
-    
-        is_goal = self._is_goal()
-        truncated = self._current_step >= self._horizon
-        reward = 1.0 if is_goal else -0.01
-        
-        return reward, is_goal, truncated, {"is_goal": is_goal, "is_valid": True}
-
-    def create_snapshot(self) -> Any:
-        snapshot = {
-            "grasped_block": self._grasped_block,
-            "current_step": self._current_step,
-            "was_action_valid": self._was_action_valid,
-            "pbc_state": self._pbc.saveState()
-        }
-
-        return snapshot
-    
-    def restore_snapshot(self, snapshot: Any) -> PhysicalObservation:
-        if self._grasped_block is not None:
-            self._pbc.removeConstraint(self._grasp_constraint)
-        
-        if snapshot["grasped_block"] is not None:
-            self._grasp_block(snapshot["grasped_block"])
-
-        self._current_step = snapshot["current_step"]
-        self._was_action_valid = snapshot["was_action_valid"]
-
-        self._pbc.restoreState(snapshot["pbc_state"])
-
-        return self._get_observation()
-    
-    def step(self, action: PhysicalAction) -> Tuple[PhysicalObservation, float, bool, bool, Dict[str, Any]]:
-        self._perform_action(action)
-        observation = self._get_observation()
-        reward, terminated, truncated, info = self._evaluate_last_transition()
-        
-        return observation, reward, terminated, truncated, info
-    
     def step_human(self) -> Tuple[PhysicalObservation, float, bool, bool, Dict[str, Any]]:
-        gripper_action = self._get_keyboard_gripper()
-
-        if gripper_action >= 0:
-            return self.step([0, gripper_action])
-
         eeff_delta = np.array(self._get_keyboard_eeff_delta())
 
         if all(eeff_delta == np.array([0, 0, 0])):
@@ -604,26 +603,8 @@ class SimulatedNicoBlocksWorld(PhysicalEnvironment):
             new_pos_eeff = pos_eeff + eeff_delta
 
             joints_action = self._pbc.calculateInverseKinematics(self._robot, self._eeff, new_pos_eeff, orn_eeff)
+
+        # pos_goal, orn_goal = self._pbc.getBasePositionAndOrientation(self._goal)
+        # joints_action = self._pbc.calculateInverseKinematics(self._robot, self._eeff, pos_goal)
         
-        return self.step([1, joints_action])
-    
-    def reset(self, *, seed: int | None = None, options: Dict[str, Any] | None = None) -> Tuple[PhysicalObservation, Dict[str, Any]]:
-        super().reset(seed=seed)
-
-        if self._grasped_block is not None:
-            self._pbc.removeConstraint(self._grasp_constraint)
-
-        self._pbc.restoreState(self._init_pbc_state)
-
-        state = self._generate_initial_blocks_state()
-        self._set_blocks_state(state)
-
-        self._current_step = 0
-        self._was_action_valid = True
-        self._grasped_block = None
-        observation = self._get_observation()
-
-        return observation, {}
-        
-    def close(self) -> None:
-        self._pbc.disconnect()
+        return self.step(joints_action)

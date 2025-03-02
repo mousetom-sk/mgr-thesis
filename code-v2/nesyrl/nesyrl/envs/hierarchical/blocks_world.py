@@ -3,7 +3,7 @@ from typing import Tuple, List, Dict, Any
 import numpy as np
 
 from .base import SymbolicOptionsEnvironment
-from envs.physical import PhysicalObservation, PhysicalAction, SimulatedNicoBlocksWorld
+from envs.physical import PhysicalObservation, PhysicalAction, NicoBlocksWorldBase
 from envs.physical.util import length
 from envs.symbolic import StateAtom, Contradiction, Valuation, ActionAtom
 from envs.symbolic.util import FuzzySemantics
@@ -49,7 +49,7 @@ class OptionsNicoBlocksWorld(SymbolicOptionsEnvironment):
 
     __constants__ = ["_table", "_use_top", "_semantics"]
 
-    env: SimulatedNicoBlocksWorld
+    env: NicoBlocksWorldBase
 
     _table: str
     
@@ -61,7 +61,7 @@ class OptionsNicoBlocksWorld(SymbolicOptionsEnvironment):
     _dist2: float
 
     def __init__(
-        self, env: SimulatedNicoBlocksWorld,
+        self, env: NicoBlocksWorldBase,
         use_top: bool = True, semantics: FuzzySemantics = FuzzySemantics()
     ) -> None:
         super().__init__(env)

@@ -1,10 +1,7 @@
-from envs.physical import SimulatedNicoBlocksWorld
+from nesyrl.envs.physical import NicoBlocksWorldMove
 
 
-env = SimulatedNicoBlocksWorld(10000,
-                               ["a", "b", "c", "d"],
-                               [["a", "b", "c", "d"]],
-                               [["a"], ["b"], ["c", "d"]])
+env = NicoBlocksWorldMove(10000, ["a", "b", "c", "d"])
 
 while True:
     env.reset()
