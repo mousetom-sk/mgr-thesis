@@ -124,7 +124,7 @@
 		<child link="right_shoulder"/>
 		<origin rpy="0 0 0" xyz="0.005 -0.045 0.23"/>
 		<axis xyz="0 0 1"/>
-		<limit effort="30" lower="-0.3490" upper="1.3963" velocity="1"/> <!-- <limit effort="30" lower="-0.4363" upper="1.3963" velocity="1"/> -->
+		<limit effort="30" lower="-0.2200" upper="1.3220" velocity="1"/> <!-- <limit effort="30" lower="-0.4363" upper="1.3963" velocity="1"/> -->
 	</joint>
 	<link name="right_collarbone">
 		<visual>
@@ -235,12 +235,12 @@
 			<origin rpy="0 0 0" xyz="0.000031 -0.011056 -0.0675"/>
 		</inertial>
 	</link>
-	<joint name="r_wrist_z_rjoint" type="revolute">
+	<joint name="r_wrist_z_rjoint" type="fixed"> <!-- <joint name="r_wrist_z_rjoint" type="revolute"> -->
 		<parent link="right_lower_arm"/>
 		<child link="right_wrist"/>
-		<origin rpy="0 0 1.57" xyz="0 0 -0.105"/>
+		<origin rpy="0 0 3.142" xyz="0 0 -0.105"/> <!-- <origin rpy="0 0 1.57" xyz="0 0 -0.105"/> -->
 		<axis xyz="0 0 1"/>
-		<limit effort="30" lower="-1.571" upper="1.571" velocity="1"/>
+		<limit effort="30" lower="-3.142" upper="0" velocity="1"/> <!-- <limit effort="30" lower="-1.571" upper="1.571" velocity="1"/> -->
 	</joint>
 	<link name="r_palm">
 		<visual>
@@ -264,7 +264,7 @@
 			<origin rpy="0 0 0" xyz="-0.029511 0.002253 -0.023968"/>
 		</inertial>
 	</link>
-	<joint name="r_wrist_x_rjoint" type="revolute">
+	<joint name="r_wrist_x_rjoint" type="fixed"> <!-- <joint name="r_wrist_x_rjoint" type="revolute"> -->
 		<parent link="right_wrist"/>
 		<child link="r_palm"/>
 		<origin rpy="0 0 0" xyz="0 0 -0.10"/>

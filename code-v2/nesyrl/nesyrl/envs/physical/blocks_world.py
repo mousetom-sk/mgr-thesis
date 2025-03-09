@@ -30,6 +30,7 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
     _current_step: int
     _current_blocks_state: List[List[str]]
     _all_blocks_states: List[List[List[str]]]
+    _invalid_action = False
 
     _pbc: pbc.BulletClient
     _static_objects: Dict[str, int]
@@ -45,8 +46,11 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
     _active_joints_ub: NDArray
     _active_joints_mf: NDArray
     _active_joints_mv: NDArray
+    _max_force = 500
+    _max_velocity = 0.5
 
-    _epsilon_velocity = 1e-4
+    _velocity_epsilon = 1e-4
+    _colision_epsilon = 1e-4
 
     _pb_data_dir = pbd.getDataPath()
     _models_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "models")
@@ -86,23 +90,26 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
 
     _goal_init = {
         "fileName": os.path.join(_models_dir, "objects", "goal_area.urdf"),
-        "globalScaling": 0.8
+        "globalScaling": 0.6
     }
 
     _goal_color = [0.0, 1.0, 0.0, 0.25]
     _transparent = [0.0, 1.0, 0.0, 0.0]
 
+    _block_size = 0.05 * _block_init["globalScaling"]
     _blocks_x = 0.25
     _blocks_y_start = -0.14
-    _blocks_y_delta = 0.05 * _block_init["globalScaling"] * 3 / 2
+    _blocks_y_delta = _block_size * 3 / 2
     _blocks_z_start = 0.645
-    _blocks_z_delta = 0.05 * _block_init["globalScaling"]
+    _blocks_z_delta = _block_size
 
-    _goal_x_shift = (- 0.05 * _block_init["globalScaling"] / 2
-                     - 0.025 * _goal_init["globalScaling"] / 2)
+    _goal_size = 0.05 * _goal_init["globalScaling"]
+    _goal_shift = [- (_block_size + _goal_size) / 2,
+                   0,
+                   (_block_size - _goal_size) / 2]
 
     def __init__(
-        self, horizon: int, blocks: List[str],
+        self, horizon: int, blocks: List[str], simulation_steps: int,
         highlighting: bool = True, render_mode: str | None = "human"
     ) -> None:
         super().__init__()
@@ -113,6 +120,7 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
             raise ValueError(f"Unknown blocks: {unknown_blocks}")
         
         self._horizon = horizon
+        self._simulation_steps = simulation_steps
         self.render_mode = render_mode
 
         self._init_pybullet()
@@ -241,8 +249,8 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
             self._active_joints.append(id)
             self._active_joints_lb.append(joint_info[8])
             self._active_joints_ub.append(joint_info[9])
-            self._active_joints_mf.append(joint_info[10])
-            self._active_joints_mv.append(joint_info[11])
+            self._active_joints_mf.append(self._max_force) # (joint_info[10])
+            self._active_joints_mv.append(self._max_velocity) # (joint_info[11])
         
         self._active_joints_lb = np.array(self._active_joints_lb)
         self._active_joints_ub = np.array(self._active_joints_ub)
@@ -250,9 +258,9 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
         self._active_joints_mv = np.array(self._active_joints_mv)
 
     def _init_action_space(self) -> None:
-        self.action_space = spaces.Box(self._active_joints_lb,
-                                       self._active_joints_ub,
-                                       dtype=float)
+        max_joint_step  = 0.002 * self._simulation_steps * np.ones((len(self._active_joints),))
+
+        self.action_space = spaces.Box(-max_joint_step, max_joint_step, dtype=float)
 
     def _init_observation_space(self) -> None:
         self.observation_space = spaces.Dict(
@@ -272,7 +280,12 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
         # joints_mid = self._active_joints_ub + self._active_joints_lb / 2
         # action *= joints_range / 2
         # action += joints_mid
-        
+
+        joints_state = np.array([self._pbc.getJointState(self._robot, id)[0]
+                                 for id in self._active_joints])
+        action += joints_state
+        action = np.clip(action, self._active_joints_lb, self._active_joints_ub)
+
         for i in range(len(self._active_joints)):
             self._pbc.setJointMotorControl2(bodyUniqueId=self._robot,
                                             jointIndex=self._active_joints[i],
@@ -284,7 +297,14 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
                                             velocityGain=0.3)
 
         self._current_step += 1
-        self._pbc.stepSimulation()
+
+        for _ in range(self._simulation_steps):
+            self._pbc.stepSimulation()
+            self._invalid_action = (self._invalid_action
+                                    or self._is_moving_block()
+                                    or self._is_robot_collision()
+                                    # or self._is_behind_blocks()
+                                    )
     
     def _get_observation(self) -> PhysicalObservation:
         observation = {}
@@ -311,14 +331,19 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
         velocities = list(self._pbc.getBaseVelocity(id)[0]
                           for id in self._blocks.values())
         
-        return any(squared_length(v) >= (self._epsilon_velocity ** 2)
+        return any(squared_length(v) >= (self._velocity_epsilon ** 2)
                    for v in velocities)
 
     def _is_robot_collision(self) -> bool:
         cps = self._pbc.getContactPoints(self._robot)
+        
+        return any(cp[8] < -self._colision_epsilon for cp in cps)
     
-        return any(cp[8] < 0 for cp in cps)
-    
+    def _is_behind_blocks(self) -> bool:
+        pos_eeff = self._pbc.getLinkState(self._robot, self._eeff)[0]
+
+        return pos_eeff[0] > self._blocks_x - self._block_size / 2
+
     def _generate_random_blocks_state(self) -> List[List[str]]:
         state_index = self.np_random.integers(len(self._all_blocks_states))
         state = self._all_blocks_states[state_index]
@@ -382,6 +407,7 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
 
         self._current_step = 0
         observation = self._get_observation()
+        self._invalid_action = False
 
         return observation, {}
         
@@ -391,20 +417,22 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
 
 class NicoBlocksWorldMove(NicoBlocksWorldBase):
 
-    closest_obs_key = "closest"
-
     _home = "home"
     _subgoal_idx: int
     _subgoals: List[str]
     _last_dist_to_goal: float
+    _last_eeff_pos: List[float]
 
-    _home_pos = [0.12, -0.14, 0.93]
+    _steps_in_goal: int
+    _achieved_treshold = 240
+
+    _home_pos: List[float]
 
     def __init__(
-        self, horizon: int, blocks: List[str],
+        self, horizon: int, blocks: List[str], simulation_steps: int,
         highlighting: bool = True, render_mode: str | None = "human"
     ) -> None:
-        super().__init__(horizon, blocks, highlighting, render_mode)
+        super().__init__(horizon, blocks, simulation_steps, highlighting, render_mode)
 
         self._subgoal_idx = 0
         self._subgoals = []
@@ -420,8 +448,8 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         block_postions = []
 
         for b in self._blocks:
-            if self._subgoal_idx < len(self._subgoals) and b == self._subgoals[self._subgoal_idx]:
-                continue
+            # if self._subgoal_idx < len(self._subgoals) and b == self._subgoals[self._subgoal_idx]:
+            #     continue
 
             pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[b])
             block_in_eeff = self._pbc.multiplyTransforms(inv_pos_eeff, inv_orn_eeff, pos, orn)
@@ -466,10 +494,13 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
 
         return subgoals
     
-    def _activate_subgoal(self, subgoal: str) -> None:
+    def _activate_subgoal(self, subgoal: str, extra_shift: bool = False) -> None:
         if subgoal in self._blocks:
             pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[subgoal])
-            rel_pos, rel_orn = [self._goal_x_shift, 0, 0], [0, 0, 0, 1]
+            rel_pos, rel_orn = list(self._goal_shift), [0, 0, 0, 1]
+
+            if extra_shift:
+                rel_pos[2] += self._block_size
 
             goal_pos, goal_orn = self._pbc.multiplyTransforms(pos, orn, rel_pos, rel_orn)
         elif subgoal.startswith(self._table):
@@ -479,7 +510,7 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
                    self._blocks_y_start + i * self._blocks_y_delta,
                    self._blocks_z_start]
             orn = [0, 0, 0, 1]
-            rel_pos, rel_orn = [self._goal_x_shift, 0, 0], [0, 0, 0, 1]
+            rel_pos, rel_orn = list(self._goal_shift), [0, 0, 0, 1]
 
             goal_pos, goal_orn = self._pbc.multiplyTransforms(pos, orn, rel_pos, rel_orn)
         else:
@@ -497,11 +528,22 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         
         return length(goal_in_eeff[0])
 
+    def _get_eeff_position(self) -> List[float]:
+        return list(self._pbc.getLinkState(self._robot, self._eeff)[0])
+
     def _is_current_subgoal_achieved(self) -> bool:
-        aabb_min, aabb_max = self._pbc.getAABB(self._goal)
+        pos_goal = self._pbc.getBasePositionAndOrientation(self._goal)[0]
         pos_eeff = self._pbc.getLinkState(self._robot, self._eeff)[0]
 
-        return all(aabb_min[i] < pos_eeff[i] < aabb_max[i] for i in range(3))
+        in_goal =  all(pos_goal[i] - self._goal_size / 2
+                       < pos_eeff[i] <
+                       pos_goal[i] + self._goal_size / 2
+                       for i in range(3))
+        
+        if in_goal:
+            self._steps_in_goal += self._simulation_steps
+        
+        return self._steps_in_goal > self._achieved_treshold
 
     def _move_block(self, block: str, to: str) -> None:
         orn = [0, 0, 0, 1]
@@ -522,25 +564,32 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         self._pbc.resetBasePositionAndOrientation(self._blocks[block], pos, orn)
         self._pbc.resetBaseVelocity(self._blocks[block], velocity, velocity)
 
-    def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
-        invalid = self._is_moving_block() or self._is_robot_collision()
+    def _evaluate_movement_to_goal(self) -> float:
+        dist_to_goal = self._get_distance_to_goal()
+        
+        return self._last_dist_to_goal - dist_to_goal
+    
+    def _sigmoid(self, x: float) -> float:
+        return 1 / (1 + np.exp(-x))
 
-        if invalid:
+    def _evaluate_movement_to_extremes(self) -> float:
+        eeff_pos = self._get_eeff_position()
+        direction = np.array(eeff_pos) - np.array(self._last_eeff_pos)
+
+        delta_x = -direction[0]
+        factor_x = self._sigmoid(50 * (eeff_pos[0] - self._blocks_x - self._block_size / 2))
+
+        delta_z = direction[2]
+        factor_z = self._sigmoid(50 * (self._blocks_z_start - eeff_pos[2]))
+        
+        return min(factor_x * delta_x, factor_z * delta_z) / 10
+    
+    def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
+        if self._invalid_action:
             return -0.1, True, False, {"is_goal": False}
         
-        dist_to_goal = self._get_distance_to_goal()
-        delta = self._last_dist_to_goal - dist_to_goal
-    
-        if self._is_current_subgoal_achieved():
-            self._subgoal_idx += 1
-            
-            if self._subgoal_idx < len(self._subgoals):
-                self._activate_subgoal(self._subgoals[self._subgoal_idx])
-            
-            if self._subgoal_idx == len(self._subgoals) - 1:
-                self._move_block(self._subgoals[0], self._subgoals[1])
-
-        self._last_dist_to_goal = self._get_distance_to_goal()
+        delta = self._evaluate_movement_to_goal()
+        # delta += self._evaluate_movement_to_extremes()
         
         is_goal = self._subgoal_idx >= len(self._subgoals)
         truncated = self._current_step >= self._horizon
@@ -557,16 +606,37 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         self._subgoals = list(snapshot["subgoals"])
 
         return self._get_observation()
+    
+    def step(self, action):
+        observation, reward, terminated, truncated, info = super().step(action)
         
+        if self._is_current_subgoal_achieved():
+            self._subgoal_idx += 1
+            self._steps_in_goal = 0
+
+            if self._subgoal_idx < len(self._subgoals):
+                self._activate_subgoal(self._subgoals[self._subgoal_idx], True)
+            
+            if self._subgoal_idx == len(self._subgoals) - 1:
+                self._move_block(self._subgoals[0], self._subgoals[1])
+
+        self._last_dist_to_goal = self._get_distance_to_goal()
+        self._last_eeff_pos = self._get_eeff_position()
+
+        return observation, reward, terminated, truncated, info
+    
     def reset(self, *, seed: int | None = None, options: Dict[str, Any] | None = None) -> Tuple[PhysicalObservation, Dict[str, Any]]:
         obs, info = super().reset(seed=seed, options=options)
 
         self._subgoal_idx = 0
         self._subgoals = self._generate_random_move()
+        self._steps_in_goal = 0
+        self._home_pos = self._pbc.getLinkState(self._robot, self._eeff)[0]
+
         self._activate_subgoal(self._subgoals[self._subgoal_idx])
-
         self._last_dist_to_goal = self._get_distance_to_goal()
-
+        self._last_eeff_pos = self._get_eeff_position()
+        
         return obs, info
     
 
@@ -597,7 +667,7 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         eeff_delta = np.array(self._get_keyboard_eeff_delta())
 
         if all(eeff_delta == np.array([0, 0, 0])):
-            joints_action = [js[0] for js in self._pbc.getJointStates(self._robot, self._active_joints)]
+            joints_action = [0] * len(self._active_joints) # [js[0] for js in self._pbc.getJointStates(self._robot, self._active_joints)]
         else:
             pos_eeff, orn_eeff = [np.array(v) for v in self._pbc.getLinkState(self._robot, self._eeff)[:2]]
             new_pos_eeff = pos_eeff + eeff_delta

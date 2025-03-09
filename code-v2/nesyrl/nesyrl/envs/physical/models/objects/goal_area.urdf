@@ -4,7 +4,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <box size=".025 .05 .05"/>
+                <box size=".05 .05 .05"/>
             </geometry>
             <material name="framemat0">
                 <color rgba="1 1 1 1"/>

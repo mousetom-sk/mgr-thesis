@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 import gymnasium as gym
 
 
-PhysicalObservation = Dict[str, float | NDArray]
+PhysicalObservation = Dict[str, float | NDArray] | NDArray
 PhysicalAction = NDArray
 
 
