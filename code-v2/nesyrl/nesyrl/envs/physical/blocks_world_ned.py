@@ -40,13 +40,13 @@ class NedBlocksWorldBase(PhysicalEnvironment):
     
     _robot: int
     _eeff: int
-    _eeff_name = "base_gripper"
+    _eeff_name = "endeffector"
     _active_joints: List[int]
     _active_joints_lb: NDArray
     _active_joints_ub: NDArray
     _active_joints_mf: NDArray
     _active_joints_mv: NDArray
-    _max_force = 500
+    # _max_force = 500
     _max_velocity = 0.5
 
     _velocity_epsilon = 1e-4
@@ -70,7 +70,7 @@ class NedBlocksWorldBase(PhysicalEnvironment):
 
     _block_init = {
         "fileName": os.path.join(_models_dir, "objects", "cube.urdf"),
-        "globalScaling": 0.8
+        "globalScaling": 0.6
     }
     
     _block_colors = {
@@ -83,7 +83,7 @@ class NedBlocksWorldBase(PhysicalEnvironment):
     }
 
     _robot_init = {
-        "fileName": os.path.join(_models_dir, "robots", "ned", "niryo_ned.urdf"),
+        "fileName": os.path.join(_models_dir, "robots", "ned", "ned.urdf"),
         "basePosition": [-0.1, 0, 0.65],
         "baseOrientation": pb.getQuaternionFromEuler([0, 0, 0])
     }
@@ -99,7 +99,7 @@ class NedBlocksWorldBase(PhysicalEnvironment):
     _block_size = 0.05 * _block_init["globalScaling"]
     _blocks_x = 0.25
     _blocks_y_start = -0.14
-    _blocks_y_delta = _block_size * 3 / 2
+    _blocks_y_delta = 5 * _block_size / 2
     _blocks_z_start = 0.645
     _blocks_z_delta = _block_size
 
@@ -249,7 +249,7 @@ class NedBlocksWorldBase(PhysicalEnvironment):
             self._active_joints.append(id)
             self._active_joints_lb.append(joint_info[8])
             self._active_joints_ub.append(joint_info[9])
-            self._active_joints_mf.append(self._max_force) # (joint_info[10])
+            self._active_joints_mf.append(joint_info[10])
             self._active_joints_mv.append(self._max_velocity) # (joint_info[11])
         
         self._active_joints_lb = np.array(self._active_joints_lb)
@@ -271,16 +271,6 @@ class NedBlocksWorldBase(PhysicalEnvironment):
         )
 
     def _perform_action(self, action: PhysicalAction) -> None:
-        # joints_state = np.array([self._pbc.getJointState(self._robot, id)[0]
-        #                          for id in self._active_joints])
-        # action *= np.pi
-        # action /= 180
-        
-        # joints_range = self._active_joints_ub - self._active_joints_lb
-        # joints_mid = self._active_joints_ub + self._active_joints_lb / 2
-        # action *= joints_range / 2
-        # action += joints_mid
-
         joints_state = np.array([self._pbc.getJointState(self._robot, id)[0]
                                  for id in self._active_joints])
         action += joints_state
@@ -301,8 +291,8 @@ class NedBlocksWorldBase(PhysicalEnvironment):
         for _ in range(self._simulation_steps):
             self._pbc.stepSimulation()
             self._invalid_action = (self._invalid_action
-                                    or self._is_moving_block()
-                                    or self._is_robot_collision()
+                                    # or self._is_moving_block()
+                                    # or self._is_robot_collision()
                                     # or self._is_behind_blocks()
                                     )
     
@@ -588,12 +578,12 @@ class NedBlocksWorldMove(NedBlocksWorldBase):
         if self._invalid_action:
             return -0.1, True, False, {"is_goal": False}
         
-        delta = self._evaluate_movement_to_goal()
-        # delta += self._evaluate_movement_to_extremes()
+        reward = self._evaluate_movement_to_goal()
+        # reward += self._evaluate_movement_to_extremes()
         
         is_goal = self._subgoal_idx >= len(self._subgoals)
         truncated = self._current_step >= self._horizon
-        reward = 1.0 if is_goal else delta
+        reward = 1.0 if is_goal else reward
         
         return reward, is_goal, truncated, {"is_goal": is_goal}
 
@@ -676,5 +666,5 @@ class NedBlocksWorldMove(NedBlocksWorldBase):
 
         # pos_goal, orn_goal = self._pbc.getBasePositionAndOrientation(self._goal)
         # joints_action = self._pbc.calculateInverseKinematics(self._robot, self._eeff, pos_goal)
-        
+
         return self.step(joints_action)

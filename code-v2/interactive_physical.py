@@ -1,4 +1,4 @@
-from nesyrl.envs.physical import NicoBlocksWorldMove
+from nesyrl.envs.physical.blocks_world_mag import NicoBlocksWorldMove
 
 
 env = NicoBlocksWorldMove(10000, ["a", "b", "c", "d"], 1)

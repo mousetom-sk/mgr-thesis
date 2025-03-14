@@ -9,7 +9,8 @@ from tianshou.policy import A2CPolicy
 from tianshou.utils.net.common import ActorCritic
 from tianshou.utils.statistics import RunningMeanStd
 
-from nesyrl.envs.physical import NicoBlocksWorldMove
+from nesyrl.envs.physical.blocks_world_mag import NicoBlocksWorldMove
+# from nesyrl.envs.physical.wrappers import VectorEnvNormObs
 from nesyrl.util.collecting import SuccessCollector
 
 
@@ -52,9 +53,10 @@ torch.set_default_dtype(torch.float32)
 gym.register(id="nesyrl-physical/NicoBlocksWorldMove-v0", entry_point=NicoBlocksWorldMove)
 
 env_kwargs = {
-    "horizon": 8192,
+    "horizon": 4096,
     "blocks": ["a", "b", "c", "d"],
-    "simulation_steps": 1
+    "simulation_steps": 1,
+    "render_mode": None
 }
 
 if __name__ == "__main__":
@@ -67,12 +69,16 @@ if __name__ == "__main__":
     test_venv.set_obs_rms(load_obs_norm_params(f"{args.dir}/run_{args.run}{ep_str}_norm.txt"))
 
     # Prepare agent
-    actor = torch.load(f"{args.dir}/run_{args.run}{ep_str}_actor.model")
-    critic = torch.load(f"{args.dir}/run_{args.run}{ep_str}_critic.model")
-    
+    actor = torch.load(f"{args.dir}/run_{args.run}{ep_str}_actor.model", device)
+    critic = torch.load(f"{args.dir}/run_{args.run}{ep_str}_critic.model", device)
+
+    to_device = lambda m: setattr(m, "device", device) if hasattr(m, "device") else None
+    actor.apply(to_device)
+    critic.apply(to_device)
+
     actor_critic = ActorCritic(actor, critic)
 
-    optim = torch.load(f"{args.dir}/run_{args.run}{ep_str}.optim")
+    optim = torch.load(f"{args.dir}/run_{args.run}{ep_str}.optim", device)
 
     policy = A2CPolicy(
         actor=actor,
@@ -91,6 +97,6 @@ if __name__ == "__main__":
     
     policy.eval()
     test_collector.reset(gym_reset_kwargs={"seed": 47})
-    result = test_collector.collect(n_episode=1000, render=False)
+    result = test_collector.collect(n_episode=100, render=False)
 
     print(result)

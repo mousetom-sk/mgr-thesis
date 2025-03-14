@@ -16,7 +16,7 @@ from tianshou.utils.net.common import Net, ActorCritic
 from tianshou.utils.net.continuous import ActorProb, Critic
 from tianshou.utils.statistics import RunningMeanStd
 
-from nesyrl.envs.physical import NicoBlocksWorldMove
+from nesyrl.envs.physical.blocks_world_mag import NicoBlocksWorldMove
 from nesyrl.util.logging import FileLogger
 from nesyrl.util.collecting import SuccessCollector
 

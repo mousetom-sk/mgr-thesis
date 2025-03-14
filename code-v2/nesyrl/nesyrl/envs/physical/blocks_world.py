@@ -577,23 +577,38 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         direction = np.array(eeff_pos) - np.array(self._last_eeff_pos)
 
         delta_x = -direction[0]
-        factor_x = self._sigmoid(50 * (eeff_pos[0] - self._blocks_x - self._block_size / 2))
-
-        delta_z = direction[2]
-        factor_z = self._sigmoid(50 * (self._blocks_z_start - eeff_pos[2]))
+        consider_x = eeff_pos[0] > self._blocks_x - self._block_size / 2
         
-        return min(factor_x * delta_x, factor_z * delta_z) / 10
+        delta_z = direction[2]
+        consider_z = eeff_pos[2] < self._blocks_z_start + self._block_size / 2
+
+        # delta_x = -direction[0]
+        # factor_x = self._sigmoid(50 * (eeff_pos[0] - self._blocks_x - self._block_size / 2))
+
+        # delta_z = direction[2]
+        # factor_z = self._sigmoid(50 * (self._blocks_z_start - eeff_pos[2]))
+        
+        if consider_x and consider_z:
+            return min(delta_x, delta_z) / 5
+        
+        if consider_x:
+            return delta_x / 5
+        
+        if consider_z:
+            return delta_z / 5
+        
+        return 0.0
     
     def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
         if self._invalid_action:
             return -0.1, True, False, {"is_goal": False}
         
-        delta = self._evaluate_movement_to_goal()
-        # delta += self._evaluate_movement_to_extremes()
+        reward = self._evaluate_movement_to_goal()
+        # reward += self._evaluate_movement_to_extremes()
         
         is_goal = self._subgoal_idx >= len(self._subgoals)
         truncated = self._current_step >= self._horizon
-        reward = 1.0 if is_goal else delta
+        reward = 1.0 if is_goal else reward
         
         return reward, is_goal, truncated, {"is_goal": is_goal}
 
