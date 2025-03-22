@@ -1,5 +1,2 @@
-from .policies import *
-from .actor_critic import *
-
-# from .lmlp_a2c import *
-# from .lmlp_reinforce import *
+from .policies import PGPolicy, A2CPolicy, PPOPolicy
+from .actor_critic import Actor, Critic, CriticTab, ActorCriticOptimizer

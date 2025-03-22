@@ -12,6 +12,8 @@ from tianshou.data.collector import Collector
 
 class SuccessCollector(Collector):
 
+    ep_cnt = 0
+
     def collect(
         self,
         n_step: Optional[int] = None,
@@ -86,6 +88,8 @@ class SuccessCollector(Collector):
         episode_lens = []
         episode_infos = []
         episode_start_indices = []
+
+        print(self.ep_cnt)
 
         while True:
             assert len(self.data) == len(ready_env_ids)
@@ -164,6 +168,9 @@ class SuccessCollector(Collector):
             step_count += len(ready_env_ids)
 
             if np.any(done):
+                self.ep_cnt += 1
+                print(self.ep_cnt)
+                
                 env_ind_local = np.where(done)[0]
                 env_ind_global = ready_env_ids[env_ind_local]
                 episode_count += len(env_ind_local)

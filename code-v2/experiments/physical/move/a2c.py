@@ -78,13 +78,13 @@ gym.register(id="nesyrl-physical/NicoBlocksWorldMove-v0", entry_point=NicoBlocks
 
 args = {
     "train_env_kwargs":  {
-        "horizon": 8192,
+        "horizon": 4096,
         "blocks": ["a", "b", "c", "d"],
         "simulation_steps": 1,
         # "render_mode": None
     },
     "test_env_kwargs":  {
-        "horizon": 8192,
+        "horizon": 4096,
         "blocks": ["a", "b", "c", "d"],
         "simulation_steps": 1,
         "render_mode": None
@@ -103,7 +103,7 @@ args = {
     },
     "trainer": {
         "max_epoch": 50,
-        "step_per_epoch": 32768,
+        "step_per_epoch": 16384,
         "repeat_per_collect": 1,
         "episode_per_test": 1,
         "step_per_collect": 1,

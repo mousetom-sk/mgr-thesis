@@ -1,3 +1,2 @@
-from .policies import *
-
-# from .ac import *
+from .actor_critic import DualActorProb
+# from .policies import *

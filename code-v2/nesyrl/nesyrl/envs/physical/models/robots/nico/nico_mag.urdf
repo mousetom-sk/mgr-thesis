@@ -377,7 +377,7 @@
 	<joint name="endeffector_joint" type="fixed">
     	<parent link="right_middle_finger"/>
     	<child link="endeffector"/>
-    	<origin rpy="0 0 0" xyz="0.03 0 -0.02"/>
+    	<origin rpy="0 0 0" xyz="0.015 0 -0.02"/>
 	</joint>
     <link name="endeffector_center">
     	<visual>

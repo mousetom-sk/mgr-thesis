@@ -1,4 +1,4 @@
-from nesyrl.envs.physical.blocks_world_ned import NedBlocksWorldMove
+from nesyrl.envs.physical.blocks_world_ned_mag import NedBlocksWorldMove
 
 
 env = NedBlocksWorldMove(10000, ["a", "b", "c", "d"], 1)

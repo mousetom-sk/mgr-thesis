@@ -29,10 +29,12 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
     _horizon: int
     _current_step: int
     _current_blocks_state: List[List[str]]
-    _all_blocks_states: List[List[List[str]]]
+    _stacking_base: List[int]
     _invalid_action = False
+    _max_stacks = 6
 
     _pbc: pbc.BulletClient
+    _simulation_steps: int
     _static_objects: Dict[str, int]
     _blocks: Dict[str, int]
     _goal: int
@@ -81,7 +83,15 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
         "c": [0.0, 0.0, 1.0, 1.0],
         "d": [1.0, 0.8, 0.0, 1.0],
         "e": [0.5, 0.0, 1.0, 1.0],
-        "f": [1.0, 0.0, 0.5, 1.0]
+        "f": [1.0, 0.5, 0.0, 1.0],
+        "g": [1.0, 1.0, 1.0, 1.0],
+        "h": [1.0, 1.0, 1.0, 1.0],
+        "i": [1.0, 1.0, 1.0, 1.0],
+        "j": [1.0, 1.0, 1.0, 1.0],
+        "k": [1.0, 1.0, 1.0, 1.0],
+        "l": [1.0, 1.0, 1.0, 1.0],
+        "m": [1.0, 1.0, 1.0, 1.0],
+        "n": [1.0, 1.0, 1.0, 1.0],
     }
 
     _robot_init = {
@@ -98,15 +108,16 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
     _goal_color = [0.0, 1.0, 0.0, 0.25]
     _transparent = [0.0, 1.0, 0.0, 0.0]
 
+    _table_top = 0.625
     _block_size = 0.05 * _block_init["globalScaling"]
     _blocks_x = 0.25
     _blocks_y_start = -0.18
     _blocks_y_delta = 5 * _block_size / 2
-    _blocks_z_start = 0.625 + _block_size / 2
+    _blocks_z_start = _table_top + _block_size / 2
     _blocks_z_delta = _block_size
 
     _goal_size = 0.05 * _goal_init["globalScaling"]
-    _goal_shift = [0, 0, (_block_size + _goal_size) / 2]
+    _goal_shift = [0, 0, 3 * _block_size / 2]
 
     def __init__(
         self, horizon: int, blocks: List[str], simulation_steps: int,
@@ -129,7 +140,7 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
         self._init_goal(highlighting)
         self._init_robot()
 
-        self._init_all_blocks_states()
+        self._stacking_base = [0] * len(blocks) + [1] * (self._max_stacks - 1)
 
         self._load_active_joints_and_eeff(highlighting)
         self._init_action_space()
@@ -187,43 +198,6 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
                                          flags=pb.URDF_USE_SELF_COLLISION,
                                          **self._robot_init)
 
-    def _init_all_blocks_states(self) -> None:
-        all_states = set()
-        
-        for permutation in itertools.permutations(self._blocks):
-            for stacking in itertools.product(range(2), repeat=len(self._blocks) - 1):
-                stacking = list(stacking) + [1]
-                partial_state = []
-                stack = []
-
-                for block, end_stack in zip(permutation, stacking):
-                    stack.append(block)
-
-                    if end_stack:
-                        partial_state.append(tuple(stack))
-                        stack = []
-
-                free_bases = len(self._block_colors) - len(partial_state)
-
-                if free_bases == 0:
-                    all_states.add(tuple(partial_state))
-                    continue
-
-                for ids in itertools.combinations(range(len(self._block_colors)), free_bases):
-                    partial_copy = list(partial_state)
-                    state = []
-
-                    for i in range(len(self._block_colors)):
-                        if i in ids:
-                            state.append(tuple())
-                        else:
-                            state.append(partial_copy.pop())
-                
-                    all_states.add(tuple(state))
-
-        self._all_blocks_states = [[list(stack) for stack in s]
-                                   for s in all_states]
-    
     def _load_active_joints_and_eeff(self, highlighting: bool) -> None:
         self._active_joints = []
         self._active_joints_lb = []
@@ -333,8 +307,19 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
                     or self._is_robot_collision())
 
     def _generate_random_blocks_state(self) -> List[List[str]]:
-        state_index = self.np_random.integers(len(self._all_blocks_states))
-        state = self._all_blocks_states[state_index]
+        ordering = iter(self.np_random.permutation(list(self._blocks.keys())))
+        stacking = self.np_random.permutation(self._stacking_base)
+        stacking = np.concatenate((stacking, [1]))
+
+        state = []
+        stack = []
+
+        for end in stacking:
+            if end:
+                state.append(stack)
+                stack = []
+            else:
+                stack.append(next(ordering))
 
         return state
     
@@ -406,11 +391,13 @@ class NicoBlocksWorldBase(PhysicalEnvironment):
 class NicoBlocksWorldMove(NicoBlocksWorldBase):
 
     _home = "home"
+    _middle = "middle"
     _subgoal_idx: int
     _subgoals: List[str]
     _last_dist_to_goal: float
-    _last_eeff_pos: List[float]
+    _last_collider_pos: List[float]
     _last_dist_to_closest: float
+    _last_eeff_orn_axis: List[float]
 
     _steps_in_goal: int
     _achieved_treshold: int
@@ -419,6 +406,8 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
     _magnetization_constraint: int
 
     _home_pos: List[float]
+
+    _target_orn_axis = np.array([-np.sqrt(2) / 2, 0, np.sqrt(2) / 2])
 
     def __init__(
         self, horizon: int, blocks: List[str], simulation_steps: int,
@@ -437,26 +426,28 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         self.observation_space = spaces.Box(-np.inf, np.inf, shape=(size,), dtype=float)
 
     def _get_observation(self) -> PhysicalObservation:
-        pos_eeff = self._pbc.getLinkState(self._robot, self._eeff)[0]
+        pos_eeff, orn_eeff = self._pbc.getLinkState(self._robot, self._eeff)[:2]
         pos_goal = self._pbc.getBasePositionAndOrientation(self._goal)[0]
+        rel_pos_goal = np.array(pos_goal) - np.array(pos_eeff)
+        pos_collider = self._get_collider_pose()[0]
         pos_closest = self._get_closest_block_info()[1]
+        rel_pos_closest = np.array(pos_closest) - np.array(pos_eeff)
         joints_state = [self._pbc.getJointState(self._robot, id)[0]
                         for id in self._active_joints]
 
         observation = np.concatenate([np.array(pos_eeff),
-                                      np.array(pos_goal),
-                                      np.array(pos_closest),
+                                    #   np.array(orn_eeff),
+                                      np.array(rel_pos_goal),
+                                    #   np.array(pos_collider),
+                                      np.array(rel_pos_closest),
                                       np.array(joints_state),
-                                      np.array([self._magnetized_block is not None])])
+                                      np.array([self._magnetized_block is not None])
+                                      ])
 
         return observation
     
     def _get_closest_block_info(self) -> Tuple[str, List[int], float]:
-        # if self._magnetized_block is None:
-        pos_collider, orn_collider = self._pbc.getLinkState(self._robot, self._eeff_center)[:2]
-        # else:
-        #     pos_collider, orn_collider = self._pbc.getLinkState(self._robot, self._eeff)[:2]
-
+        pos_collider, orn_collider = self._get_collider_pose()
         inv_pos_collider, inv_orn_collider = self._pbc.invertTransform(pos_collider, orn_collider)
 
         block_postions = []
@@ -464,6 +455,9 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         for b in self._blocks:
             if self._magnetized_block is not None and b == self._magnetized_block:
                 continue
+
+            # if self._subgoal_idx < len(self._subgoals) and b == self._subgoals[self._subgoal_idx]:
+            #     continue
 
             pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[b])
             block_in_collider = self._pbc.multiplyTransforms(inv_pos_collider, inv_orn_collider, pos, orn)
@@ -485,21 +479,29 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
             on_table = len(stack1) == 1
 
             for j, stack2 in enumerate(self._current_blocks_state):
-                if j == i or (on_table and len(stack2) == 0):
+                if j == i or (on_table and len(stack2) == 0
+                               and all(len(self._current_blocks_state[k]) == 0
+                                       for k in range(min(i, j) + 1, max(i, j)))):
                     continue
+
+                # if j == i or (on_table and len(stack2) == 0):
+                #     continue
 
                 if len(stack2) == 0:
                     valid_moves.append((block, f"{self._table}{j}"))
+                    # valid_moves.append((block, f"{self._middle}{self._table}{j}", f"{self._table}{j}"))
+                    # valid_moves.append((block, self._home, f"{self._table}{j}"))
                 else:
                     valid_moves.append((block, stack2[-1]))
+                    # valid_moves.append((block, f"{self._middle}{stack2[-1]}", stack2[-1]))
+                    # valid_moves.append((block, self._home, stack2[-1]))
 
         subgoals.extend(self.np_random.choice(valid_moves))
-
         subgoals.append(self._home)
 
         return subgoals
     
-    def _activate_subgoal(self, subgoal: str, extra_shift: bool = False) -> None:
+    def _get_subgoal_pose(self, subgoal: str, extra_shift: bool = False) -> Tuple[List[float], List[float]]:
         if subgoal in self._blocks:
             pos, orn = self._pbc.getBasePositionAndOrientation(self._blocks[subgoal])
             rel_pos, rel_orn = list(self._goal_shift), [0, 0, 0, 1]
@@ -518,8 +520,23 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
             rel_pos, rel_orn = list(self._goal_shift), [0, 0, 0, 1]
 
             goal_pos, goal_orn = self._pbc.multiplyTransforms(pos, orn, rel_pos, rel_orn)
+        elif subgoal.startswith(self._middle):
+            target = subgoal[len(self._middle):]
+            target_pos = self._get_subgoal_pose(target, extra_shift)[0]
+            eeff_pos = self._pbc.getLinkState(self._robot, self._eeff)[0]
+            middle_pos = (np.array(target_pos) + np.array(eeff_pos)) / 2
+            shift = length(middle_pos - np.array(eeff_pos))
+
+            # goal_pos = [middle_pos[0] - shift, middle_pos[1], middle_pos[2]]
+            goal_pos = [max(middle_pos[0] - shift, 0.1), middle_pos[1], middle_pos[2]]
+            goal_orn = [0, 0, 0, 1]
         else:
             goal_pos, goal_orn = self._home_pos, [0, 0, 0, 1]
+
+        return goal_pos, goal_orn
+    
+    def _activate_subgoal(self, subgoal: str, extra_shift: bool = False) -> None:
+        goal_pos, goal_orn = self._get_subgoal_pose(subgoal, extra_shift)
 
         self._pbc.resetBasePositionAndOrientation(self._goal, goal_pos, goal_orn)
 
@@ -533,8 +550,18 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         
         return length(goal_in_eeff[0])
 
-    def _get_eeff_position(self) -> List[float]:
-        return list(self._pbc.getLinkState(self._robot, self._eeff)[0])
+    def _get_collider_pose(self) -> Tuple[List[float], List[float]]:
+        # if self._magnetized_block is None:
+        #     pos, orn = self._pbc.getLinkState(self._robot, self._eeff_center)[:2]
+        # else:
+        #     pos1, orn = self._pbc.getLinkState(self._robot, self._eeff_center)[:2]
+        #     pos2 = self._pbc.getLinkState(self._robot, self._eeff)[0]
+
+        #     pos = (np.array(pos1) + np.array(pos2)) / 2
+
+        pos, orn = self._pbc.getLinkState(self._robot, self._eeff)[:2]
+
+        return list(pos), list(orn)
 
     def _is_current_subgoal_achieved(self) -> bool:
         pos_goal = self._pbc.getBasePositionAndOrientation(self._goal)[0]
@@ -546,13 +573,15 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
                        for i in range(3))
         
         if in_goal:
-            self._steps_in_goal += self._simulation_steps
-        
+            self._steps_in_goal += 1
+        else:
+            self._steps_in_goal = 0
+
         return self._steps_in_goal > self._achieved_treshold
     
     def _magnetize_block(self, block: str) -> None:
         self._magnetized_block = block
-        rel_pos, rel_orn = [0, 0, 0], [0, 0, 0, 1]
+        rel_pos, rel_orn = [self._block_size / 2, 0, 0], [0, 0, 0, 1]
 
         self._magnetization_constraint = self._pbc.createConstraint(
             self._robot, self._eeff, self._blocks[self._magnetized_block], -1, pb.JOINT_FIXED,
@@ -613,43 +642,94 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         dist_to_goal = self._get_distance_to_goal()
         
         return self._last_dist_to_goal - dist_to_goal
-    
-    def _evaluate_movement_to_extremes(self) -> float:
-        eeff_pos = self._get_eeff_position()
-        direction = np.array(eeff_pos) - np.array(self._last_eeff_pos)
-
-        delta_x = -direction[0]
-        consider_x = eeff_pos[0] > self._blocks_x - self._block_size / 2
         
-        delta_z = direction[2]
-        consider_z = eeff_pos[2] < self._blocks_z_start + self._block_size / 2
-        
-        if consider_x and consider_z:
-            return min(delta_x, delta_z) / 5
-        
-        if consider_x:
-            return delta_x / 5
-        
-        if consider_z:
-            return delta_z / 5
-        
-        return 0.0
+        # return - dist_to_goal
     
     def _evaluate_movement_to_closest(self) -> float:
-        dist_to_closest = self._get_closest_block_info()[2]
+        closest, _, dist_to_closest = self._get_closest_block_info()
 
-        if min(dist_to_closest, self._last_dist_to_closest) > 2 * self._block_size:
+        if self._magnetized_block is None:
+            boundary = 3 * self._block_size / 2
+        else:
+            boundary = 2 * self._block_size
+
+        if min(dist_to_closest, self._last_dist_to_closest) > boundary:
             return 0.0
         
-        return (dist_to_closest - self._last_dist_to_closest) / 5
+        delta = min(dist_to_closest, boundary) - min(self._last_dist_to_closest, boundary)
+        delta = 3 * delta if delta < 0 else delta
+
+        # if self._magnetized_block is None:
+        #     delta /= 4
+
+        return delta
+
+        # if dist_to_closest > 2 * self._block_size:
+        #     return 0.0
+        
+        # return dist_to_closest - 2 * self._block_size
+    
+    def _evaluate_movement_to_table(self) -> float:
+        collider_pos = self._get_collider_pose()[0]
+        dist_to_table = collider_pos[2] - self._table_top
+        last_dist_to_table = self._last_collider_pos[2] - self._table_top
+        boundary = 2 * self._block_size
+
+        if min(dist_to_table, last_dist_to_table) > boundary:
+            return 0.0
+        
+        delta = min(dist_to_table, boundary) - min(last_dist_to_table, boundary)
+        delta = 3 * delta if delta < 0 else delta
+
+        # if self._magnetized_block is None:
+        #     delta /= 4
+        
+        return delta
+
+        # if dist_to_table > self._block_size:
+        #     return 0.0
+        
+        # return dist_to_table - self._block_size
+    
+    def _evaluate_movement_behind_blocks(self) -> float:
+        collider_pos = self._get_collider_pose()[0]
+        dist_behind_blocks = collider_pos[0] - self._blocks_x
+        last_dist_behind_blocks = self._last_collider_pos[0] - self._blocks_x
+
+        boundary = 0 # if self._magnetized_block is None else - 2 * self._block_size
+
+        if max(dist_behind_blocks, last_dist_behind_blocks) < boundary:
+            return 0.0
+        
+        delta = max(last_dist_behind_blocks, boundary) - max(dist_behind_blocks, boundary)
+        delta = 3 * delta if delta < 0 else delta
+
+        return delta
+
+        # if dist_behind_blocks < boundary:
+        #     return 0.0
+        
+        # return boundary - dist_behind_blocks
+    
+    def _evaluate_movement_to_target_orn(self) -> float:
+        eeff_orn_axis = self._pbc.getLinkState(self._robot, self._eeff)[1][:-1]
+        dist = length(np.array(eeff_orn_axis) - self._target_orn_axis)
+        dist = min(dist, length(np.array(eeff_orn_axis) + self._target_orn_axis))
+
+        last_dist = length(np.array(self._last_eeff_orn_axis) - self._target_orn_axis)
+        last_dist = min(last_dist, length(np.array(self._last_eeff_orn_axis) + self._target_orn_axis))
+
+        return (last_dist - dist) / 10
     
     def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
         if self._invalid_action:
             return -0.1, True, False, {"is_goal": False}
         
         reward = self._evaluate_movement_to_goal()
-        # reward += self._evaluate_movement_to_closest()
-        # reward += self._evaluate_movement_to_extremes()
+        reward += self._evaluate_movement_to_closest()
+        reward += self._evaluate_movement_to_table()
+        reward += self._evaluate_movement_behind_blocks()
+        # reward /= 100
         
         is_goal = self._subgoal_idx >= len(self._subgoals)
         truncated = self._current_step >= self._horizon
@@ -687,7 +767,7 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
         observation = self._get_observation()
 
         self._last_dist_to_goal = self._get_distance_to_goal()
-        self._last_eeff_pos = self._get_eeff_position()
+        self._last_collider_pos = self._get_collider_pose()[0]
         self._last_dist_to_closest = self._get_closest_block_info()[2]
 
         return observation, reward, terminated, truncated, info
@@ -706,13 +786,17 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
 
         self._activate_subgoal(self._subgoals[self._subgoal_idx])
         self._last_dist_to_goal = self._get_distance_to_goal()
-        self._last_eeff_pos = self._get_eeff_position()
+        self._last_collider_pos = self._get_collider_pose()[0]
         self._last_dist_to_closest = self._get_closest_block_info()[2]
         
         return obs, info
     
 
-    
+    def _get_keyboard_mag(self) -> bool:
+        keypresses = self._pbc.getKeyboardEvents()
+
+        return keypresses.get(65297, pb.KEY_WAS_RELEASED) == pb.KEY_IS_DOWN # UP
+
     def _get_keyboard_eeff_delta(self) -> NDArray:
         keypresses = self._pbc.getKeyboardEvents()
         delta_x = delta_y = delta_z = 0
@@ -748,5 +832,8 @@ class NicoBlocksWorldMove(NicoBlocksWorldBase):
 
         # pos_goal, orn_goal = self._pbc.getBasePositionAndOrientation(self._goal)
         # joints_action = self._pbc.calculateInverseKinematics(self._robot, self._eeff, pos_goal)
+
+        if self._get_keyboard_mag():
+            self._magnetize_block("c")
         
         return self.step(joints_action)

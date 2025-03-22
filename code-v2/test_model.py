@@ -54,9 +54,12 @@ gym.register(id="nesyrl-physical/NicoBlocksWorldMove-v0", entry_point=NicoBlocks
 
 env_kwargs = {
     "horizon": 4096,
-    "blocks": ["a", "b", "c", "d"],
+    "blocks": ["a", "b", "c", "d",
+            #    "e", "f",
+            #    "g", "h", "i", "j", "k", "l", "m", "n"
+               ],
     "simulation_steps": 1,
-    "render_mode": None
+    # "render_mode": None
 }
 
 if __name__ == "__main__":
@@ -86,6 +89,7 @@ if __name__ == "__main__":
         optim=optim,
         dist_fn=torch.distributions.Normal,
         action_scaling=True,
+        action_space=test_env.action_space,
         action_bound_method="tanh",
         gae_lambda=1,
         ent_coef=0,
