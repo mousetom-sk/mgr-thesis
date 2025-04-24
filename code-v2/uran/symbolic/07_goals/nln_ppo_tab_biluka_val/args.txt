@@ -1,0 +1,91 @@
+{
+    "train_env_kwargs": {
+        "horizon": 50,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "goal_states": [
+            [
+                [
+                    "a",
+                    "b",
+                    "c",
+                    "d"
+                ]
+            ],
+            [
+                [
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                ]
+            ]
+        ],
+        "switch_period": 1,
+        "reward_subgoals": false
+    },
+    "test_env_kwargs": {
+        "horizon": 50,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "goal_states": [
+            [
+                [
+                    "a",
+                    "b",
+                    "c",
+                    "d"
+                ]
+            ],
+            [
+                [
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                ]
+            ]
+        ],
+        "switch_period": 1,
+        "reward_subgoals": false
+    },
+    "test_train_seed": 42,
+    "test_test_seed": 47,
+    "test_episides": 1000,
+    "policy": {
+        "gae_lambda": 0.9,
+        "ent_coef": 0,
+        "max_batchsize": 1,
+        "advantage_normalization": false
+    },
+    "trainer": {
+        "max_epoch": 600,
+        "step_per_epoch": 100,
+        "repeat_per_collect": 1,
+        "episode_per_test": 100,
+        "step_per_collect": 1,
+        "batch_size": 1
+    },
+    "num_runs": 5,
+    "goals": [
+        0,
+        1
+    ],
+    "goals_switch": 1,
+    "reward_subgoals": false,
+    "actor_init": "uniform",
+    "actor_init_arg": 0.1,
+    "actor_num_ands": 2,
+    "actor_or": "orluka",
+    "actor_validity": true,
+    "actor_lr": 0.001,
+    "critic_lr": 0.05
+}

@@ -1,0 +1,28 @@
+{
+    "test_env_kwargs": {
+        "horizon": 50,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+        ],
+        "goal_state": [
+            [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f"
+            ]
+        ]
+    },
+    "test_train_seed": 42,
+    "test_test_seed": 47,
+    "test_episides": 1000,
+    "train_epochs": 300,
+    "episode_per_epoch": 100
+}

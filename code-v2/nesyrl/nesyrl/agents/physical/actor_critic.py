@@ -32,7 +32,7 @@ class DualActorProb(Module):
         
         obs = torch.tensor(obs).to(mu0)
         mask = obs[:, -1] > 0
-        mu = torch.where(mask, mu1 + mu0.detach(), mu0)
-        sigma = torch.where(mask, sigma1 + sigma0.detach(), sigma0)
+        mu = torch.where(mask, mu1, mu0)
+        sigma = torch.where(mask, sigma1, sigma0)
 
         return (mu, sigma), state

@@ -36,15 +36,17 @@ class Move(ActionAtom):
 
 class BlocksWorld(SymbolicEnvironment):
 
-    __constants__ = ["_table", "_horizon", "_use_top", "_goal_state", "_invalid_state"]
-
+    __constants__ = ["_table", "_horizon", "_use_top", "_reward_subgoals", "_goal_state", "_invalid_state"]
+    
     _table = "table"
 
     _horizon: int
     _use_top: bool
+    _reward_subgoals: bool
     _blocks: List[str]
     _goal_state: Valuation
     _all_subgoals: List[Valuation]
+    _reached_subgoals: List[Valuation]
     _initial_state: Valuation
     _invalid_state: Valuation
     _current_state: Valuation
@@ -53,7 +55,8 @@ class BlocksWorld(SymbolicEnvironment):
     def __init__(
         self, horizon: int, blocks: List[str],
         goal_state: List[List[str]], initial_state: List[List[str]] | None = None,
-        use_top: bool = True, semantics: FuzzySemantics = FuzzySemantics()
+        use_top: bool = True, semantics: FuzzySemantics = FuzzySemantics(),
+        reward_subgoals: bool = False
     ) -> None:
         super().__init__()
 
@@ -65,6 +68,7 @@ class BlocksWorld(SymbolicEnvironment):
         self._horizon = horizon
         self._blocks = blocks[:]
         self._use_top = use_top
+        self._reward_subgoals = reward_subgoals
         self._init_state_atoms()
         self._init_action_atoms()
 
@@ -153,7 +157,7 @@ class BlocksWorld(SymbolicEnvironment):
                 all_states.add(tuple(sorted(raw_state)))
 
         self.all_states = [self._parse_raw_state([list(stack) for stack in s])
-                           for s in all_states]
+                           for s in sorted(all_states)]
         self.all_states.append(self._invalid_state)
 
     def _generate_random_state(self) -> Valuation:
@@ -217,40 +221,38 @@ class BlocksWorld(SymbolicEnvironment):
     def _get_observation(self) -> Valuation:
         return copy.deepcopy(self._current_state)
     
+    def _get_reached_subgoals(self) -> List[Valuation]:
+        return [sg for sg in self._all_subgoals
+                if self.semantics.is_subsumed(sg, self._current_state)]
+    
+    def _evaluate_subgoals_change(self) -> float:
+        last_reached = self._reached_subgoals
+        current_reached = self._get_reached_subgoals()
+
+        if len(last_reached) < len(current_reached):
+            return 0.1
+        
+        if len(last_reached) > len(current_reached):
+            return -0.2
+        
+        return -0.1
+    
     def _evaluate_last_transition(self) -> Tuple[float, bool, bool, Dict[str, Any]]:
         if self.semantics.is_true(Contradiction(), self._current_state):
             return -1.0, True, False, {"is_goal": False}
         
         is_goal = self.semantics.is_subsumed(self._goal_state, self._current_state)
         truncated = self._current_step >= self._horizon
-        reward = 1.0 if is_goal else -0.1
+
+        if is_goal:
+            reward = 1.0
+        elif self._reward_subgoals:
+            reward = self._evaluate_subgoals_change()
+            self._reached_subgoals = self._get_reached_subgoals()
+        else:
+            reward = -0.1
 
         return reward, is_goal, truncated, {"is_goal": is_goal}
-
-    def get_raw_state(self) -> List[List[str]]:
-        remainig_blocks = set(self._blocks)
-        raw_state = []
-
-        for b in self._blocks:
-            if self._is_top(b):
-                raw_state.append([b])
-                remainig_blocks.discard(b)
-
-        while remainig_blocks:
-            new_raw_state = []
-
-            for stack in raw_state:
-                for b in remainig_blocks:
-                    if self.semantics.is_true(On(stack[0], b), self._current_state):
-                        new_raw_state.append([b] + stack)
-                        remainig_blocks.discard(b)
-                        break
-                else:
-                    new_raw_state.append(stack)
-            
-            raw_state = new_raw_state
-
-        return raw_state
         
     def _parse_raw_state(self, raw_state: List[List[str]]) -> Valuation:
         remaining_blocks = set(self._blocks)
@@ -286,7 +288,44 @@ class BlocksWorld(SymbolicEnvironment):
         
         return state
     
-    def step(self, action: int) -> Tuple[Valuation, float, bool, Dict[str, Any]]:
+    def get_raw_state(self) -> List[List[str]]:
+        remainig_blocks = set(self._blocks)
+        raw_state = []
+
+        for b in self._blocks:
+            if self._is_top(b):
+                raw_state.append([b])
+                remainig_blocks.discard(b)
+
+        while remainig_blocks:
+            new_raw_state = []
+
+            for stack in raw_state:
+                for b in remainig_blocks:
+                    if self.semantics.is_true(On(stack[0], b), self._current_state):
+                        new_raw_state.append([b] + stack)
+                        remainig_blocks.discard(b)
+                        break
+                else:
+                    new_raw_state.append(stack)
+            
+            raw_state = new_raw_state
+
+        return raw_state
+    
+    def generate_random_transition(self) -> Tuple[Valuation, Valuation, int]:
+        self._current_state = self._generate_random_state()
+        valid_actions = [a for a in self.action_atoms
+                         if self._is_valid_action(a)]
+        
+        observation = self._get_observation()
+        action = self._np_random.choice(valid_actions)
+        self._perform_action(action)
+        next_observation = self._get_observation()
+
+        return observation, next_observation, self.action_atoms.index(action)
+    
+    def step(self, action: int) -> Tuple[Valuation, float, bool, bool, Dict[str, Any]]:
         action = self.action_atoms[action]
 
         self._perform_action(action)
@@ -303,6 +342,8 @@ class BlocksWorld(SymbolicEnvironment):
 
         self._current_step = 0
         self._current_state = self._generate_initial_state()
+        self._reached_subgoals = self._get_reached_subgoals()
+
         observation = self._get_observation()
 
         return observation, {}

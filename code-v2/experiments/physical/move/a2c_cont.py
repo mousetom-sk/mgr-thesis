@@ -6,17 +6,17 @@ from pathlib import Path
 import gymnasium as gym
 import numpy as np
 import torch
-from torch.optim import Optimizer, RMSprop, Adam
+from torch.optim import Optimizer
 
 from tianshou.data import Collector, ReplayBuffer
 from tianshou.env import DummyVectorEnv, VectorEnvNormObs
 from tianshou.trainer import OnpolicyTrainer
 from tianshou.policy import A2CPolicy
-from tianshou.utils.net.common import Net, ActorCritic
+from tianshou.utils.net.common import ActorCritic
 from tianshou.utils.net.continuous import ActorProb, Critic
 from tianshou.utils.statistics import RunningMeanStd
 
-from nesyrl.envs.physical import NicoBlocksWorldMove
+from nesyrl.envs.physical.blocks_world_mag import NicoBlocksWorldMove
 from nesyrl.util.logging import FileLogger
 from nesyrl.util.collecting import SuccessCollector
 
@@ -75,16 +75,10 @@ def next_epoch(
     test_venv.set_obs_rms(train_venv.get_obs_rms())
 
 
-# Basic configuration
-optimizers = {
-    "rms": RMSprop,
-    "adam": Adam
-}
-
 parser = argparse.ArgumentParser()
 parser.add_argument("--dir", help="path to the directory with the model to continue training", type=str, required=True)
 parser.add_argument("--run", help="index of the run to continue training", type=int, required=True)
-parser.add_argument("--ep", help="index of the run to continue training", type=int, required=True)
+parser.add_argument("--ep", help="episode from which to continue training", type=int, required=True)
 
 log_dir = f"results/physical/move/a2c_cont_{time.strftime('%d%m%Y_%H%M%S', time.gmtime(time.time()))}"
 device = "cuda:1" if torch.cuda.is_available() else "cpu"
@@ -94,13 +88,13 @@ gym.register(id="nesyrl-physical/NicoBlocksWorldMove-v0", entry_point=NicoBlocks
 
 args = {
     "train_env_kwargs":  {
-        "horizon": 8192,
+        "horizon": 4096,
         "blocks": ["a", "b", "c", "d"],
         "simulation_steps": 1,
         "render_mode": None
     },
     "test_env_kwargs":  {
-        "horizon": 8192,
+        "horizon": 4096,
         "blocks": ["a", "b", "c", "d"],
         "simulation_steps": 1,
         "render_mode": None
@@ -118,8 +112,8 @@ args = {
         "max_batchsize": 1
     },
     "trainer": {
-        "max_epoch": 50,
-        "step_per_epoch": 32768,
+        "max_epoch": 200,
+        "step_per_epoch": 16384,
         "repeat_per_collect": 1,
         "episode_per_test": 3,
         "step_per_collect": 1,

@@ -1,8 +1,9 @@
 from __future__ import annotations
 from typing import Dict, Set, List, Tuple, Iterable, Callable
 
-import itertools
 from abc import ABC, abstractmethod
+import itertools
+import functools
 
 import torch
 from torch import Tensor
@@ -106,7 +107,7 @@ class NLPredicateAtom(NLModule):
         
         for struct in structures:
             if len(self._output_vars) == 0:
-                output.append([struct[str(self.predicate(*self.args))]])
+                output.append([self._read_structure(struct, *self.args)])
                 continue
         
             domains = [struct.domains[v.domain] for v in self._output_vars]
@@ -117,13 +118,16 @@ class NLPredicateAtom(NLModule):
                                          if isinstance(arg, NLVariable) else arg)
                 args = map(apply_sub, self.args)
 
-                outs.append(struct[str(self.predicate(*args))])
+                outs.append(self._read_structure(struct, *args))
 
             output.append(torch.tensor(outs).reshape([len(d) for d in domains]))
 
         self.last_output = torch.tensor(output)
 
         return self.last_output
+    
+    def _read_structure(self, structure: Structure, *args: str) -> float:
+        return structure[str(self.predicate(*args))]
 
     def __str__(self) -> str:
         if len(self.args) > 0:
@@ -135,6 +139,20 @@ class NLPredicateAtom(NLModule):
     
     def params_str(self) -> str:
         return ""
+
+
+class NLNegatedPredicateAtom(NLPredicateAtom):
+    
+    def _read_structure(self, structure: Structure, *args: str) -> float:
+        return 1 - structure[str(self.predicate(*args))]
+
+    def __str__(self) -> str:
+        if len(self.args) > 0:
+            args = f"({', '.join(str(arg) for arg in self.args)})"
+        else:
+            args = ""
+
+        return f"not {self.predicate.__name__.lower()}{args}"
 
 
 class NLModuleParametrized(NLModule):
@@ -169,24 +187,6 @@ class NLModuleParametrized(NLModule):
             self.weight.register_hook(lambda grad: trainable * grad)
 
     def prepare_transforms(self) -> List[NLVariable]:
-
-        def extend(x: Tensor, s: Structure, mask: Tensor) -> Tensor:
-            if len(input_vars) == 0:
-                return x
-            
-            full_shape = torch.tensor(
-                [x.shape[0]] + [len(s.domains[v.domain]) for v in input_vars]
-            )
-        
-            shape = torch.clone(full_shape)
-            shape[~mask] = 1
-            x.reshape(shape)
-
-            full_shape[0] = 1
-            full_shape[mask] = 1
-
-            return torch.tile(x, full_shape)
-
         module_vars = [module.prepare_transforms()
                        for module in self.nl_modules]
         
@@ -199,9 +199,26 @@ class NLModuleParametrized(NLModule):
         self._transforms = []
         for vars in module_vars:
             mask = torch.isin(torch.tensor(input_vars), torch.tensor(vars))
-            self._transforms.append(lambda x, s: extend(x, s, mask))
+            self._transforms.append(functools.partial(self._extend, mask=mask, input_vars=input_vars))
 
         return input_vars
+    
+    def _extend(self, x: Tensor, s: Structure, mask: Tensor, input_vars: List[NLVariable]) -> Tensor:
+        if len(input_vars) == 0:
+            return x
+        
+        full_shape = torch.tensor(
+            [x.shape[0]] + [len(s.domains[v.domain]) for v in input_vars]
+        )
+    
+        shape = torch.clone(full_shape)
+        shape[~mask] = 1
+        x.reshape(shape)
+
+        full_shape[0] = 1
+        full_shape[mask] = 1
+
+        return torch.tile(x, full_shape)
     
     def reset_parameters(self) -> None:
         with torch.no_grad():
@@ -210,7 +227,7 @@ class NLModuleParametrized(NLModule):
     def set_parameters(self, weight: Tensor) -> None:
         with torch.no_grad():
             mask = ~torch.isnan(weight)
-            self.weight[mask] = weight
+            self.weight.copy_(torch.where(mask, weight, self.weight))
     
     def compute_regularization_loss(self) -> Tensor:
         return self.weight_regularizer.compute_loss(self.weight, self.last_output)
@@ -220,10 +237,13 @@ class NLModuleParametrized(NLModule):
             self.weight_postprocessor.postprocess(self.weight)
     
     def _collect_inputs(self, structures: Iterable[Structure]) -> Tensor:
-        inputs = [trans(module.last_output, structures[0])
+        inputs = [trans(x=module.last_output, s=structures[0])
                   for trans, module in zip(self._transforms, self.nl_modules)]
+        inputs = torch.cat(inputs, -1).to(self.weight)
+        
+        self.weight_postprocessor.register_forward(inputs, self.weight)
 
-        return torch.cat(inputs, -1)
+        return inputs
     
     def __str__(self) -> str:
         if len(self.nl_modules) > 0:
@@ -244,6 +264,8 @@ class NLModuleParametrized(NLModule):
 
 class NLStack(NLModule):
 
+    _transforms: List[Callable[[Tensor], Tensor]]
+
     def __init__(self, nl_modules: List[NLModule]):
         super().__init__()
 
@@ -253,13 +275,13 @@ class NLStack(NLModule):
         for module in self.nl_modules:
             module.prepare_transforms()
 
-        self._transforms = [lambda x, s: torch.flatten(x, 1)
+        self._transforms = [functools.partial(torch.flatten, start_dim=1)
                             for _ in self.nl_modules]
 
         return []
 
     def _collect_inputs(self, structures: Iterable[Structure]) -> Tensor:
-        inputs = [trans(module.last_output, structures[0])
+        inputs = [trans(input=module.last_output)
                   for trans, module in zip(self._transforms, self.nl_modules)]
 
         return torch.cat(inputs, -1)

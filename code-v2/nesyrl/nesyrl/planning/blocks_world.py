@@ -1,13 +1,17 @@
-from typing import List
+from typing import List, Dict, Any
 
 import multiprocessing
 import subprocess
 
-from nesyrl.envs.symbolic import ActionAtom, On, Move
-from nesyrl.logic.propositional import Valuation, FuzzySemantics
+import numpy as np
+
+from tianshou.data import Batch
+from tianshou.policy import BasePolicy
+
+from nesyrl.envs.symbolic.blocks_world import BlocksWorld, ActionAtom, On, Move
 
 
-class BlocksWorldASPPlanner:
+class BlocksWorldASPPlanner(BasePolicy):
 
     _table = "table"
 
@@ -33,62 +37,43 @@ holds(on(X,Y),t) :- holds(on(X,Y),t-1), not moved(X,t), block(X)."""
 
 #show move/3."""
 
-    _horizon: int
-    _semantics: FuzzySemantics
-    _blocks: List[str]
-    _goal_state: Valuation
-    _initial_state: Valuation
+    _env: BlocksWorld
+    _plan: List[ActionAtom]
+    _plan_idx: int
+    _log_dir: str
 
-    def __init__(
-        self, horizon: int, blocks: List[str],
-        goal_state: List[List[str]], initial_state: List[List[str]],
-        semantics: FuzzySemantics = FuzzySemantics()
-    ) -> None:
+    def __init__(self, env: BlocksWorld, log_dir: str) -> None:
         super().__init__()
 
-        if self._table in blocks:
-            raise ValueError(f"No block can be named {self._table}")
+        self._env = env
+        self._plan = []
+        self._plan_idx = 0
+        self._log_dir = log_dir
+
+    def forward(self, *args, **kwargs) -> Batch:
+        if self._plan_idx >= len(self._plan):
+            self._horizon = self._env._horizon
+            self._blocks = list(self._env._blocks)
+            self._semantics = self._env.semantics
+
+            self._goal_state = self._env._goal_state
+            self._initial_state = self._env._current_state
+
+            self._plan_idx = 0
+            self._plan = self._solve()
         
-        self._horizon = horizon
-        self._blocks = list(blocks)
-        self._semantics = semantics
+        act = self._env.action_atoms.index(self._plan[self._plan_idx])
+        self._plan_idx += 1
 
-        self._goal_state = self._parse_raw_state(goal_state)
-        self._initial_state = self._parse_raw_state(initial_state)
-    
-    def _parse_raw_state(self, raw_state: List[List[str]]) -> Valuation:
-        remaining_blocks = set(self._blocks)
-        state = {}
+        return Batch(act=np.array([act]), state=None)
 
-        for b1 in self._blocks:
-            self._semantics.set_false(On(b1, self._table), state)
+    def learn(self, batch: Batch, **kwargs) -> Dict[str, Any]:
+        pass
 
-            for b2 in self._blocks:
-                self._semantics.set_false(On(b1, b2), state)
-
-        for stack in raw_state:
-            for b1, b2 in zip([self._table] + stack, stack + [None]):
-                if b2 is None and b1 != self._table:
-                    continue
-
-                if b2 not in remaining_blocks:
-                    if b2 not in self._blocks:
-                        raise ValueError(f"Unknown block {b2}")
-                    
-                    raise ValueError(f"Multiple occurences of the block {b2} in a single state.")
-                
-                self._semantics.set_true(On(b2, b1), state)
-                remaining_blocks.discard(b2)
-
-        if len(remaining_blocks) > 0:
-            raise ValueError(f"These blocks are not positioned: {remaining_blocks}")
-        
-        return state
-
-    def solve(self) -> List[ActionAtom]:
+    def _solve(self) -> List[ActionAtom]:
         program = self._generate_program()
         
-        in_path = "planning/blocks.lp"
+        in_path = f"{self._log_dir}/blocks.lp"
 
         with open(in_path, "w") as lp:
             print("\n".join(program), file=lp)
@@ -119,7 +104,7 @@ holds(on(X,Y),t) :- holds(on(X,Y),t-1), not moved(X,t), block(X)."""
                 asp.append(f"init(on({b1},{self._table})).")
 
             for b2 in self._blocks:
-                if self._semantics.is_true(On(b1, b2), self._initial_state):
+                if b2 != b1 and self._semantics.is_true(On(b1, b2), self._initial_state):
                     asp.append(f"init(on({b1},{b2})).")
         
         asp.append("")
@@ -129,7 +114,7 @@ holds(on(X,Y),t) :- holds(on(X,Y),t-1), not moved(X,t), block(X)."""
                 asp.append(f"goal(on({b1},{self._table})).")
 
             for b2 in self._blocks:
-                if self._semantics.is_true(On(b1, b2), self._goal_state):
+                if b2 != b1 and self._semantics.is_true(On(b1, b2), self._goal_state):
                     asp.append(f"goal(on({b1},{b2})).")
 
         asp.append("")

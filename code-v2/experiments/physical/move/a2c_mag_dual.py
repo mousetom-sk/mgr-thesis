@@ -80,15 +80,15 @@ gym.register(id="nesyrl-physical/NicoBlocksWorldMove-v0", entry_point=NicoBlocks
 
 args = {
     "train_env_kwargs":  {
-        "horizon": 512,
+        "horizon": 4096,
         "blocks": ["a", "b", "c", "d"],
-        "simulation_steps": 10,
+        "simulation_steps": 1,
         "render_mode": None
     },
     "test_env_kwargs":  {
-        "horizon": 512,
+        "horizon": 4096,
         "blocks": ["a", "b", "c", "d"],
-        "simulation_steps": 10,
+        "simulation_steps": 1,
         "render_mode": None
     },
     "test_train_seed": 42,
@@ -99,13 +99,13 @@ args = {
         "sigma_param": -0.5
     },
     "policy" : {
-        "gae_lambda": 1,
+        "gae_lambda": 0.9,
         "ent_coef": 0,
         "max_batchsize": 1
     },
     "trainer": {
         "max_epoch": 200,
-        "step_per_epoch": 2048,
+        "step_per_epoch": 16384,
         "repeat_per_collect": 1,
         "episode_per_test": 3,
         "step_per_collect": 1,
@@ -151,7 +151,7 @@ if __name__ == "__main__":
                   hidden_sizes=args["critic_hidden"],
                   activation=torch.nn.Tanh, device=device).to(device)
         critic = Critic(preprocess_net=net, device=device).to(device)
-
+        
         actor_critic = ActorCritic(actor, critic)
 
         actor_critic.apply(init_weights)

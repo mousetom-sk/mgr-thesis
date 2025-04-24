@@ -54,7 +54,7 @@ gym.register(id="nesyrl-physical/NicoBlocksWorldMove-v0", entry_point=NicoBlocks
 
 env_kwargs = {
     "horizon": 4096,
-    "blocks": ["a", "b", "c", "d",
+    "blocks": ["a", "b", "c", "d", # "e"
             #    "e", "f",
             #    "g", "h", "i", "j", "k", "l", "m", "n"
                ],

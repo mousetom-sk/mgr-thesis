@@ -1,0 +1,3 @@
+Parameter containing:
+tensor([-5.2947e-03,  7.3818e-05, -6.6094e-03,  ...,  0.0000e+00,
+         0.0000e+00,  0.0000e+00], device='cuda:0', requires_grad=True)

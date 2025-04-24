@@ -1,24 +1,27 @@
-from envs.symbolic import BlocksWorld
+from nesyrl.envs.symbolic import BlocksWorld
 
 
 if __name__ == "__main__":
-    training_env = BlocksWorld(["a", "b", "c", "d"],
-                               [["a", "b", "c", "d"]],
-                               [["a"], ["b"], ["c"], ["d"]])
+    env = BlocksWorld(50, ["a", "b", "c", "d"],
+                      [["a", "b", "c", "d"]],
+                      [["a"], ["b"], ["c"], ["d"]], reward_subgoals=True)
     
     print("All actions:")
-    print(list(zip(range(len(training_env.action_space)), map(str, training_env.action_space))))
+    print([(i, str(a)) for i, a in enumerate(env.action_atoms)])
 
-    state = training_env.reset()
+    state, _ = env.reset()
     total_reward = 0
+    done = False
     
-    while not training_env.is_final():
-        print("Current state:", list(map(str, filter(lambda f: state.features[f], state.features))))
+    while not done:
+        print("Current state:", list(map(str, filter(lambda a: state[a], state))))
         action_idx = int(input("Choose action: "))
-        action = training_env.action_space[action_idx]
-        state, reward = training_env.step(action)
+        state, reward, ter, trun, _ = env.step(action_idx)
 
         print("Reward:", reward)
         total_reward += reward
+        done = ter or trun
+
+        print(env._reached_subgoals)
 
     print("End. Total reward:", total_reward)

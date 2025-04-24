@@ -13,7 +13,7 @@ from nesyrl.agents.symbolic.actor_critic import NLActor, NLCritic
 
 class PGPolicy(PGBase):
 
-    model: NLActor
+    actor: NLActor
     
     def __init__(
         self,
@@ -46,10 +46,10 @@ class PGPolicy(PGBase):
                 ret = to_torch(minibatch.returns, torch.float, result.act.device)
                 log_prob = dist.log_prob(act).reshape(len(ret), -1).transpose(0, 1)
                 loss = -(log_prob * ret).mean()
-                loss += self.model.compute_regularization_loss()
+                loss += self.actor.compute_regularization_loss()
                 loss.backward()
                 self.optim.step()
-                self.model.postprocess_parameters()
+                self.actor.postprocess_parameters()
                 losses.append(loss.item())
 
         return {"loss": losses}

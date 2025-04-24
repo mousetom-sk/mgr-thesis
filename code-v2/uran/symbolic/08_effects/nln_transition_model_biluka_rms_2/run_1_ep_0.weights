@@ -1,0 +1,1984 @@
+Action 0
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 1
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 2
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 3
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 4
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 5
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 6
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 7
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 8
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 9
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 10
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 11
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 12
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 13
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 14
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+Action 15
+
+NLStack
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiLuka
+
+Parameter containing:
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       device='cuda:1', requires_grad=True)
+

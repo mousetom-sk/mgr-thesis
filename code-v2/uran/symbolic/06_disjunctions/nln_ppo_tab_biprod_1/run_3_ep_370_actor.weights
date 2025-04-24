@@ -1,0 +1,329 @@
+NLStack
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([ 2.4742, -1.0912, -1.9515, -0.3967,  1.0980, -0.3620, -0.3170, -0.3937,
+         0.0098, -2.4047,  0.0094, -3.4246, -0.2255, -1.3100,  0.0747,  0.0652,
+         1.4457, -0.0438, -0.0545,  1.8070], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([ 2.6468, -1.4226, -2.2477, -0.5827,  1.5251, -0.1828, -0.8880, -0.9229,
+         0.1386, -2.4657, -0.0747, -2.7150, -0.1011, -1.5293, -0.0109,  0.0041,
+         2.0003,  0.0074, -0.0346,  2.4996], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([ 1.8002, -1.0507, -1.0398, -0.6081, -0.8084,  1.8340,  1.5965,  2.1818,
+         1.7682, -0.8040, -0.8444, -0.7952, -1.3269, -1.5876, -0.8437, -1.3323,
+        -1.0736,  1.2429, -1.4866,  1.3409], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([ 1.1587, -1.1703, -0.5967,  1.5861, -0.5871, -1.5355, -0.5609,  0.7070,
+        -0.9800, -0.5965,  2.5319, -1.2883,  2.2264, -1.2498, -1.0473, -0.9211,
+         2.4749, -1.6422,  2.2772, -0.6019], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([ 1.8041, -0.7057, -1.6610,  1.1840, -0.7139,  2.1103, -0.2905, -0.9346,
+         1.5961, -0.1930, -0.1324,  1.7844,  1.7598, -0.5937, -0.6842,  1.3005,
+        -1.5395,  0.3953, -1.5225, -1.3277], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([ 1.0225, -1.1583, -0.7734,  2.1533, -1.2029,  1.0214,  1.8174,  0.9771,
+         0.7149, -0.6542, -0.4149, -0.3880,  1.1422,  1.2899, -1.0774,  1.7797,
+        -0.8521,  0.7048,  1.0797, -0.8217], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-1.3787, -0.7313,  1.5745,  1.4717, -0.7790,  1.5875,  1.6470, -0.4560,
+         0.9020, -1.0608, -1.2280, -0.5855,  1.7109, -0.9307, -1.1026, -1.5498,
+         0.9927,  0.9651, -0.8589, -1.3000], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([ 1.7693, -1.5366, -0.7969, -0.3768, -2.5355, -0.3643,  1.2389,  1.1202,
+         1.2750, -0.3084, -1.0593,  1.4189,  1.2390, -1.0161, -0.5599,  1.1824,
+         0.7843,  0.7783, -0.5321, -0.7872], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-1.1651,  2.5314, -0.3940, -1.9246,  1.4340, -0.2624, -0.9721, -1.2508,
+         2.1486, -1.2942, -0.8790, -0.5964, -0.1605, -2.3123, -2.3318,  0.0953,
+         2.1630, -1.7655, -0.0508,  1.2940], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.3113,  0.9976, -1.2158, -1.6031,  0.8294, -0.1277, -1.2125, -0.8196,
+         1.2505, -0.9710, -0.6767, -0.6060,  1.2561, -2.9587, -1.8087, -0.0790,
+         0.9954, -0.3097,  1.1829,  1.1985], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.8780, -0.8280,  1.6012, -0.6515,  1.4293,  2.4423,  1.8534, -0.5523,
+        -1.4275,  1.4359, -0.4487, -0.7344,  0.6663, -0.4603,  0.9017, -0.3351,
+        -1.1937, -0.6769,  1.2986,  1.2000], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-1.0721,  1.0633, -0.7035,  1.2261,  1.7150, -0.9671, -1.2996, -1.1937,
+         1.3556, -1.0339, -0.7604, -1.4773,  0.9521,  1.7823,  2.1040, -0.6869,
+        -1.0008, -0.5806,  1.5906,  1.0458], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([ 0.6267, -0.2663,  1.3810,  1.9674,  1.0147, -0.2485, -0.2832,  1.6399,
+         1.4716,  1.3363, -0.4918,  1.2645, -0.8547,  1.6290,  1.3225, -0.2015,
+         1.1054, -0.9657,  0.7836, -0.8168], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([ 0.8172, -1.4632, -0.3171, -0.9097, -1.1327, -0.7816,  2.7562, -0.3758,
+        -1.6977,  1.7913, -0.9102, -0.8220, -1.5767, -1.2366,  2.4261, -0.6979,
+        -1.7329, -1.2960, -1.3199,  0.8639], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.5943,  1.4504,  1.2055, -0.9226,  0.8078,  1.7384, -0.6360, -1.0595,
+         0.4686, -0.3116, -0.6948,  1.5866, -0.5899,  1.1257, -0.4189,  1.0891,
+         1.2672,  1.3296, -0.9284,  1.1259], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.8836, -1.6414, -1.3902,  0.8604, -1.7542, -0.5481,  1.6034, -0.9808,
+        -1.0676,  1.1011, -1.4782, -1.2044,  0.5131, -0.4562, -1.2948, -0.5248,
+        -0.5426,  2.3470, -1.6311, -0.8982], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-2.1882,  0.9983, -0.3000, -1.2883, -1.6163, -0.3039,  1.5725, -0.8064,
+         1.5704, -1.0070, -1.3286, -0.1835,  1.6510, -1.1216, -1.2474, -2.1029,
+         1.0584, -0.8769, -2.3708,  2.3756], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.9072,  0.6555,  0.6637, -0.9773, -0.9241, -1.1196,  1.3582, -0.6059,
+         1.5694,  1.8744, -0.6579, -0.7461,  0.5307,  1.3767, -0.1160, -1.1918,
+         1.9178,  1.2663, -1.7502,  1.3660], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([ 1.3902, -0.3577, -0.9905, -0.6570, -1.0602, -0.3543,  1.7791,  2.8939,
+        -1.1072, -0.4475,  1.9840,  1.8521,  1.2359, -0.7881, -0.6061, -0.6459,
+         1.3955,  1.3281,  1.5592, -0.9487], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([ 1.9110,  1.7290, -1.5634, -0.6091, -0.8694, -0.7008,  1.5450,  1.8627,
+        -1.7305, -0.8918,  2.0512, -0.1237,  1.6530, -1.2264, -0.8525, -0.8129,
+         1.8690, -1.2592,  1.2497, -1.2111], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([ 0.4762, -0.4647, -2.0629, -1.4565, -2.7623,  2.3573, -0.1707, -0.8516,
+        -0.4103, -0.4153, -1.3177,  0.5540, -1.5633, -1.0926,  2.1355, -1.1403,
+        -2.4645, -1.6564,  2.0914,  1.2234], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.8464,  1.9186,  1.6076,  1.9966,  1.7656,  1.5797,  2.1172, -0.3631,
+         0.7831, -0.5021, -0.7485, -0.2945, -0.4945, -0.8631,  1.5085, -1.2095,
+        -1.0469, -0.7282, -1.2042,  0.7055], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.9038, -1.0311,  1.0467, -0.9084,  1.5669, -1.0111,  2.6609, -0.0932,
+        -1.0527, -0.3517, -0.4103,  1.3625, -0.9042,  0.6456, -0.1119, -0.4007,
+        -1.2933,  0.5332,  1.0281, -0.8268], device='cuda:1',
+       requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-0.8441,  1.4498,  1.5339, -0.6949,  0.7972, -0.5383, -0.5757, -0.2688,
+        -0.9046, -1.1524, -1.0515,  2.2710,  1.6653,  1.2153, -0.4051,  1.5583,
+        -0.7088,  1.2268,  1.5812,  1.1019], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([ 3.8889e+00, -1.9013e+00, -2.4483e+00, -4.5245e-01, -2.0557e-02,
+        -9.6107e-02, -2.9431e-03, -3.3096e-02, -1.3940e-02,  3.6236e-02,
+        -7.0521e-02, -2.5344e-01, -1.2668e-01, -1.0984e-01, -4.4332e-03,
+        -5.8854e-02, -3.6059e+00,  1.1079e-03, -4.3812e-03,  4.9642e-03],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([ 3.1342e+00, -1.9725e+00, -2.9650e+00, -1.1840e+00, -2.0988e-02,
+        -1.2995e-01, -2.1987e-03, -2.3249e-01, -1.0655e-01, -1.9058e-03,
+        -1.3323e-01, -4.3735e-02, -2.4798e-01, -4.1167e-03, -2.9200e-03,
+        -1.9607e-02, -3.0363e+00, -1.5251e-02, -3.5559e-03,  2.3013e-01],
+       device='cuda:1', requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-5.9592e-03, -3.6679e-04, -6.5395e-02, -2.4514e-01,  1.6594e+00,
+        -1.1155e+00, -1.0869e+00, -2.5240e+00, -3.8403e-01,  1.9908e-01,
+        -2.2354e-01,  2.4359e-02,  4.5633e-02, -1.3320e-01,  5.1486e-03,
+        -9.2972e-02, -1.5633e-01, -3.2307e+00,  5.2484e-02, -3.1945e-02],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-1.5906,  0.0588, -0.0084,  0.2094,  1.0208, -0.8731, -1.1760, -0.3086,
+        -0.3198,  0.2074,  0.0543, -0.1539, -0.1716, -0.0183,  0.1825, -0.1471,
+        -0.1091, -1.9988,  0.0566, -0.1701], device='cuda:1',
+       requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-3.9369e-02, -3.9189e-01,  2.0113e-01, -1.3510e-01, -7.6406e-02,
+        -1.5642e-02, -6.3739e-02,  8.1629e-04,  1.0765e+00, -3.3043e+00,
+        -1.0629e+00, -4.0640e+00, -2.7941e-01,  2.4250e-02,  1.8610e-01,
+        -8.5773e-02, -9.0296e-02, -3.8455e-02, -2.7177e+00,  5.4778e-02],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-1.4744e-01, -6.7938e-01,  7.2348e-02, -1.1818e-02, -2.0093e-01,
+         1.6717e-01, -1.2297e-02, -5.6584e-02,  2.7161e+00, -2.4074e+00,
+        -1.2329e+00, -3.7607e+00, -2.2522e-01, -8.3483e-02,  2.0063e-01,
+        -9.0898e-02, -1.6284e-01, -1.7209e-01, -3.0335e+00,  3.5133e-03],
+       device='cuda:1', requires_grad=True)
+
+NLOrClamped
+
+Parameter containing:
+tensor([1., 1.], device='cuda:1')
+NLAndBiProd
+
+Parameter containing:
+tensor([-3.5723e-02,  1.3218e-01, -2.1372e-01, -3.1981e-02,  7.4529e-02,
+        -3.3272e-02, -8.1100e-02, -3.4385e-01,  2.9441e-03, -1.5715e-01,
+        -4.1935e-03,  1.9232e-02,  3.2055e+00, -1.5659e+00, -2.5526e+00,
+        -2.9208e+00,  9.7350e-02, -4.5191e-03,  2.4328e-02, -2.8779e+00],
+       device='cuda:1', requires_grad=True)
+
+NLAndBiProd
+
+Parameter containing:
+tensor([-2.4037e-01,  9.2528e-03, -8.8727e-02,  9.1519e-03, -1.8971e-01,
+        -2.2678e-01,  8.0864e-02, -1.2733e-01, -6.7431e-03,  1.1332e-03,
+         4.3084e-02, -8.4420e-02,  3.2889e+00, -2.2935e+00, -1.6800e+00,
+        -2.5494e+00, -2.8692e-02, -7.6879e-02, -1.2029e-01, -3.0461e+00],
+       device='cuda:1', requires_grad=True)
+

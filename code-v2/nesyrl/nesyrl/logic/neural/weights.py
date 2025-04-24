@@ -49,9 +49,6 @@ class ConstantInitializer(WeightInitializer):
         weight.copy_(self.value * torch.ones_like(weight))
 
 
-# TODO: desired weights initializer (?)
-
-
 ####################
 #  Regularization  #
 ####################
@@ -112,9 +109,6 @@ class UncertaintyRegularizer(WeightRegularizer):
         return self.strength * torch.sum(loss)
 
 
-# TODO: when regularizing output calculate batch mean
-
-
 ####################
 #  Postprocessing  #
 ####################
@@ -124,6 +118,9 @@ class WeightPostprocessor(ABC):
     """
     Postprocesses weights after optimization updates.
     """
+
+    def register_forward(self, input: Tensor, weight: Tensor) -> None:
+        pass
 
     @abstractmethod
     def postprocess(self, weight: Tensor) -> None:
@@ -149,3 +146,30 @@ class ClampingPostprocessor(WeightPostprocessor):
 
     def postprocess(self, weight: Tensor) -> None:
         weight.copy_(torch.clamp(weight, self.lower_bound, self.upper_bound))
+
+
+class CorrectionPostprocessor(WeightPostprocessor):
+
+    epsilon: float
+    _last_input: Tensor
+    _last_weight: Tensor
+
+    def __init__(self, epsilon: float = 1e-5) -> None:
+        super().__init__()
+
+        self.epsilon = epsilon
+
+    def register_forward(self, input: Tensor, weight: Tensor) -> None:
+        self._last_weight = torch.clone(weight)
+
+    def postprocess(self, weight: Tensor) -> None:
+        was_pos = self._last_weight > self.epsilon
+        was_neg = self._last_weight < -self.epsilon
+
+        is_pos = weight > self.epsilon
+        is_neg = weight < -self.epsilon
+
+        mask = (was_pos & is_neg) | (was_neg & is_pos)
+
+        zeros = torch.zeros_like(weight)
+        weight.copy_(torch.where(mask, zeros, weight))
