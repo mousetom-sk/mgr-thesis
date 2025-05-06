@@ -1,0 +1,35 @@
+{
+    "test_env_kwargs": {
+        "horizon": 50,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "goal_state": [
+            [
+                "a",
+                "b",
+                "c",
+                "d"
+            ]
+        ]
+    },
+    "test_train_seed": 42,
+    "test_test_seed": 47,
+    "test_steps": 1000,
+    "trainer": {
+        "max_epoch": 300,
+        "step_per_epoch": 100,
+        "step_per_test": 100
+    },
+    "num_runs": 1,
+    "train_dir": "uran/symbolic/08_effects/collect_nln_ppo_tab_biprod/",
+    "train_run": 0,
+    "init": "constant",
+    "init_arg": 0.0,
+    "and": "biprod",
+    "optim": "rms",
+    "lr": 0.0001
+}

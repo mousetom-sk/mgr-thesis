@@ -1,0 +1,11 @@
+\begin{gather}
+    \overline{QE}(\vec{w}) = \int\displaylimits_{s \in \states} \sum_{a \in \actions(s)} \mu(s, a) \left[q_{\pi}(s, a) - \hat{q}_{\vec{w}}(s, a)\right]^2 d s,
+\end{gather}
+where $\pi$ is the current policy induced by $\hat{q}_{\vec{w}}$ and $\mu$ is a probability distribution over $\states \times \actions$, with $\mu(s, a)$ being the probability of experiencing the state-action pair $(s, a) \in \states \times \actions$ under $\pi$.
+
+
+
+\begin{gather}
+    \overline{VE}(\vec{w}) = \int\displaylimits_{s \in \states} \mu(s) \left[v_{\pi}(s) - \hat{v}_{\vec{w}}(s)\right]^2 d s,
+\end{gather}
+where $\pi$ is the current policy induced by $\hat{v}_{\vec{w}}$ and $\mu$ is a probability distribution over $\states$, with $\mu(s)$ being the probability of entering the state $s \in \states$ under $\pi$.

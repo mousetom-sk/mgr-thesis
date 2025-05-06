@@ -9,7 +9,7 @@ from tianshou.policy import A2CPolicy
 from tianshou.utils.net.common import ActorCritic
 from tianshou.utils.statistics import RunningMeanStd
 
-from nesyrl.envs.physical.blocks_world_mag import NicoBlocksWorldMove
+from nesyrl.envs.physical.blocks_world_cautious import NicoBlocksWorldMove
 # from nesyrl.envs.physical.wrappers import VectorEnvNormObs
 from nesyrl.util.collecting import SuccessCollector
 

@@ -1,7 +1,5 @@
 from typing import Tuple, Any
 
-# import matplotlib.pyplot as plt
-
 from abc import ABC, abstractmethod
 
 import torch
@@ -115,37 +113,9 @@ class Actor(NLActor):
         self._domain_atoms = env.domain_atoms
         self._semantics = env.semantics
 
-
-        # plt.ion()
-        # plt.rcParams['figure.figsize'] = [18, 8]
-        # fig, self._ax = plt.subplots()
-        # self._bars = None
-
-        # self._ax.set_xlabel("State Atoms")
-        # self._ax.set_xticks(range(len(nl_atoms)), [str(a) for a in env.state_atoms
-        #                                            if a not in env.domain_atoms
-        #                                            and (not drop_false or not isinstance(a, Contradiction))])
-        # self._ax.set_ylabel("Scaled Weight")
-        # self._ax.set_yticks(torch.arange(-10, 11) / 10)
-        # self._ax.set_ylim(-1, 1)
-        # self._ax.grid()
-        # self._i = 0
-
     def forward(self, obs: Iterable[Valuation] | Batch, state: Any = None, info: Dict[str, Any] = {}) -> Tuple[Tensor, Any]:
         obs = list(map(self._valuation_to_structure, obs))
         probs = self.net.forward(obs)
-
-        # if self._i % 10 == 0:
-        #     scaled_weight = torch.tanh(self.nln.head.nl_modules[0].weight).cpu().detach()
-
-        #     if self._bars:
-        #         self._bars.remove()
-            
-        #     self._bars = self._ax.bar(range(len(scaled_weight)), scaled_weight, color="tab:blue")
-            
-        #     plt.pause(0.05)
-            
-        # self._i += 1
 
         return probs, state
     
@@ -219,37 +189,9 @@ class ActorValidity(NLActor):
         self._domain_atoms = env.domain_atoms
         self._semantics = env.semantics
 
-
-        # plt.ion()
-        # plt.rcParams['figure.figsize'] = [18, 8]
-        # fig, self._ax = plt.subplots()
-        # self._bars = None
-
-        # self._ax.set_xlabel("State Atoms")
-        # self._ax.set_xticks(range(len(nl_atoms)), [str(a) for a in env.state_atoms
-        #                                            if a not in env.domain_atoms
-        #                                            and not isinstance(a, Contradiction)])
-        # self._ax.set_ylabel("Scaled Weight")
-        # self._ax.set_yticks(torch.arange(-10, 11) / 10)
-        # self._ax.set_ylim(-1, 1)
-        # self._ax.grid()
-        # self._i = 0
-
     def forward(self, obs: Iterable[Valuation] | Batch, state: Any = None, info: Dict[str, Any] = {}) -> Tuple[Tensor, Any]:
         obs = list(map(self._valuation_to_structure, obs))
         probs = self.net.forward(obs)
-
-        # if self._i % 10 == 0:
-        #     scaled_weight = torch.tanh(self.nln.head.nl_modules[0].weight).cpu().detach()
-
-        #     if self._bars:
-        #         self._bars.remove()
-            
-        #     self._bars = self._ax.bar(range(len(scaled_weight)), scaled_weight, color="tab:blue")
-            
-        #     plt.pause(0.05)
-            
-        # self._i += 1
 
         return probs, state
     
@@ -330,41 +272,9 @@ class ActorMulti(NLActor):
         self._domain_atoms = env.domain_atoms
         self._semantics = env.semantics
 
-        # plt.ion()
-        # plt.rcParams['figure.figsize'] = [18, 8]
-        # fig, self._ax = plt.subplots()
-        # self._bars = []
-
-        # self._ax.set_xlabel("State Atoms")
-        # self._ax.set_xticks(range(len(nl_atoms)), [str(a) for a in env.state_atoms
-        #                                            if a not in env.domain_atoms
-        #                                            and (not drop_false or not isinstance(a, Contradiction))])
-        # self._ax.set_ylabel("Scaled Weight")
-        # self._ax.set_yticks(torch.arange(-10, 11) / 10)
-        # self._ax.set_ylim(-1, 1)
-        # self._ax.grid()
-        # self._i = 0
-
     def forward(self, obs: Iterable[Valuation] | Batch, state: Any = None, info: Dict[str, Any] = {}) -> Tuple[Tensor, Any]:
         obs = list(map(self._valuation_to_structure, obs))
         probs = self.net.forward(obs)
-
-        # if self._i % 10 == 0:
-        #     weight = torch.stack([m.weight for m in self.nln.head.nl_modules[0].nl_modules])
-        #     scaled_weight = torch.tanh(weight).cpu().detach()
-
-        #     if len(self._bars) > 0:
-        #         for b in self._bars: b.remove()
-            
-        #     width = 1 / len(scaled_weight)
-        #     for i, w in enumerate(scaled_weight):
-        #         if len(self._bars) == i: self._bars.append(None)
-
-        #         self._bars[i] = self._ax.bar([j + i * width for j in range(len(w))], w, width=width, color=f"C{i}")
-            
-        #     plt.pause(0.05)
-            
-        # self._i += 1
 
         return probs, state
     

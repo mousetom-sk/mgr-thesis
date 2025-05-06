@@ -1,0 +1,60 @@
+{
+    "train_env_kwargs": {
+        "horizon": 50,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "goal_state": [
+            [
+                "a",
+                "b",
+                "c",
+                "d"
+            ]
+        ]
+    },
+    "test_env_kwargs": {
+        "horizon": 50,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "goal_state": [
+            [
+                "a",
+                "b",
+                "c",
+                "d"
+            ]
+        ]
+    },
+    "test_train_seed": 42,
+    "test_test_seed": 47,
+    "test_episides": 1000,
+    "policy": {
+        "gae_lambda": 0.9,
+        "ent_coef": 0,
+        "max_batchsize": 1,
+        "advantage_normalization": false
+    },
+    "trainer": {
+        "max_epoch": 300,
+        "step_per_epoch": 15000,
+        "repeat_per_collect": 1,
+        "episode_per_test": 100,
+        "step_per_collect": 1,
+        "batch_size": 1
+    },
+    "num_runs": 1,
+    "actor_init": "uniform",
+    "actor_init_arg": 0.1,
+    "actor_num_ands": 2,
+    "actor_or": "or",
+    "actor_lr": 0.001,
+    "critic_lr": 0.05
+}

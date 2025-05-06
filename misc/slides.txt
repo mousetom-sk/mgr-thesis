@@ -1,0 +1,150 @@
+1. Title, supervisor, consultant, ...
+
+2. Motivation
+	most successful reinforcement-learning approaches centered around (deep) neural networks
+	advantages
+		learning from raw inputs (image sequences, sensor readings)
+		acting under uncertainty even in continuous spaces
+		solving relatively complex tasks with little to no prior knowledge
+	disadvantages
+		lacking interpretability (description of the decision process) and explainability (reasoning behind the choice)
+		limited generalization
+		low data efficiency
+
+3. Aim
+	employ symbolic methods (with defined semantics) to mitigate the issues of neural networks
+		however, purely symbolic approaches also have their own downsides
+			need for abstraction from raw data
+			greater difficulties when facing continuous spaces
+			harder to learn directly from data
+	integrate symbolic with subsymbolic methods in a single neuro-symbolic system
+
+Background
+
+4. Reinforcement Learning (RL)
+	an agent interacting with an environment, striving to learn the most optimal behaviour (policy)
+	formulated as a Markov decision process
+		state - a description of the current configuration of the agent in the environment (perception)
+		action - an atomic interaction of the agent with its environment, usually resulting in a transition to another state
+		reward - a real number presented to the agent after each action assesing its quality (may be positve, zero, or negative)
+	policy - a (possibly stochastic) mapping from states to action(s) that the agent takes in the respective states
+	goal - learn a policy following which maximizes the expected cummulative reward (return) collected during interaction
+	
+	(fig. agent-env interaction)
+	
+5. Hierarchical Reinforcement Learning (HRL)
+	assume episodic tasks with a clearly defined goal state(s)
+	learn policies on at least two levels
+		higher level - learn to select subgoals to reach in order to achieve the ultimate goal
+		lower level - learn policies to reach the respective subgoals
+	naturally facilitates the integration of symbolic and subsymbolic
+		higher level (symbolic) - selecting abstarct actions/subgoals based on a symbolic abstraction over the raw environment
+		lower level (subsymbolic) - realize the abstart actions in the actual environment
+	
+Research and Experiments
+
+6. Learning with Templates
+	Neural Logic Reinforcement Learning (NLRL)
+		the policy implicitly encoded in a set of logical rules
+			implication of the form action <- pre-conditions
+		manually selected templates used to generate a set of all possibly valuable rules before learning
+		each rule is given a weight - learned via RL algoritms
+	Programmatically Interpretable Reinforcement Learning (PIRL)
+		similar to NLRL in using templates but learns a program in a functional language
+		searches the program space with a pre-trained neural policy
+	Neurally Guided Differentiable Logic Policies (NUDGE)
+		combines the key ideas in NLRL and PIRL
+		uses a neural policy to guide the initial generation of logical rules
+	advantages: interpretability, differentiability (NLRL, NUDGE) / dynamic generation (PIRL)  
+	disadvantages: templates, neural guidance (PIRL, NUDGE), pre-defined ways of generalization (NLRL, NUDGE) / no generalization (PIRL)
+
+7. Removing Templates in General
+	instead of templates and neural guidance, learn rules from scratch and dynamically
+	try entirely differentiable learning procedure (i.e, on the level of atoms not rules)
+	Differentiable Neural Logic Networks (dNL)
+		fuzzy semantics (truth values from [0, 1])
+		atomic formulas (predicates and propositions) combined through logical operators
+			propositional logic with variables implicitly universally quantified
+			multi-layer perceptrons (MLP) with special activation functions to represent conjuction and disjuction under fuzzy semantics
+			learning weights for MLP connections
+		forward chaining for multi-step reasoning (p => q, p -> q)
+	more complex variants of dNL: Neural Logic Machines (NLM) and Logical Neural Networks (LNN)
+
+8. Removing Templates in RL
+	NLM and LNN also tested on RL tasks (cite, cite)
+	... used LNNs with a simple AND-OR architecture to solve text-based games
+		one LNN for each action -> output is a single truth value
+		first layer: AND, second layer: OR -> disjunctive normal form
+		greedy selection of action based on outputs
+	
+	(fig. LNN in RL architecture)
+
+9. Our Frist Prototype - Environment
+	ultimate goal: let a robotic arm reorganize blocks on a table to build a specified structure (e.g., a stack)
+	start with a purely symbolic environment (the higher level in the hierarchical approach)
+	formulated as a Blocks World problem (a traditional problem for symbolic planning)
+		environment - table, blocks (a, b, c, ...)
+		state - truth value (only 0/1) for each possible state atom/fact in our language:
+								top(X)   - block X is on top of a stack
+								on(X, Y) - block X is stacked on block Y (X /= Y)
+								on(X, table) - block X is on table
+		action - one of the following (preconditions and effects need to be learned):
+								move(X, Y) - stack block X onto block Y (X /= Y)
+								move(X, table) - put block X on table
+		initial state - all blocks on table
+		goal state - all blocks in one stack in the order a, b, c, ... 
+		reward (from RL) - for building the complete stack: ...
+						 - for building a substack of the desired stack: ...
+						 ???- for destroying a substack: ...
+						 - for making any other action: ...
+						 - invalid action -> termination
+
+10. Our Frist Prototype - Agent
+	for each action, an MLP with the AND-OR architecture using activation functions from dNL
+		input - state and an extra input whose truth value is always 0 (to mark unnecessary actions)
+		output - the certainty (truth value) that the action should be taken
+		the simplest case with OR of just one AND branch (clause)
+	outputs from all MLPs are noralized to create a probability distribution over actions
+	the actual action taken is chosen randomly among all actions w.r.t. the computed probabilities
+	learning, i.e., optimizing weights, is done via the standard REINFORCE algorithm and gradient ascent with back-propagation
+    
+	(fig. our architecture)
+	
+11. Our Frist Prototype - Results
+	for up to four blocks, the agent learned the target nearly optimal policy (only nearly because of probabilities) within 100 episodes
+		the relevant inputs (with weight greater than ...) for move(..., ...):
+			...
+		the relevant inputs for move(..., ...), which never needs to be used:
+			...
+	for five blocks, a satisfactory policy learned only after 1000 episodes at best
+	no comparison with other methods yet
+	problems: generalization and efficiency
+	
+12. Generalization and Explainability
+	our first prototype cannot generalize
+		situations other than the one it was trained on
+		environments with more blocks
+	we thus tested an agent a single MLP for all actions move(X, Y), even Y = table
+		two branches: validity and usefulness
+		used to compute the output for each possible pair X, Y
+		results for three blocks confirmed our expectations: move(b, c) and move(a, b) equally important in the initial state
+	more robust generalization - need for quantification (universal, existential)
+	generalizing only preconditions requires embedding explanations extracted from all possible plans into these preconditions
+		may lead to arbitrarily complex formulas (questionable viability)
+		human reasoning about planning - plan is probably the only true explanation
+	
+	(fig. generalized architecture)
+
+13. Future Steps
+	not trying to learn preconditions and usefulness/ordering of actions at once
+	learn preconditions and effects directly from interactions (i.e., transition model)
+	use symbolic planning to construct a reasonable plan (based on the collected rewards)
+	Symbolic Deep Reinforcement Learning (SDRL)
+		preconditions and effect are given
+		a symbolic planner creates a plan
+		a neural policy tries to realize the plan collecting rewards
+	Hierarchical Reinforcement Learning  using Inductive Logic Programming
+		learns a symbolic transition model from experience
+		RL methods (Q learning) are used to select the next subtask to accomplish
+	
+14. Thank you (for ...)

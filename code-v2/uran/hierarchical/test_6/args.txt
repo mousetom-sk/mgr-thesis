@@ -46,6 +46,6 @@
         "max_batchsize": 1
     },
     "sym_dir": "results/symbolic/05_blocks/nln_ppo_tab_6_biprod_val/",
-    "phys_dir": "results/physical/move/a2c_best_table/",
+    "phys_dir": "results/physical/move/a2c_best_cautious/",
     "phys_run": "3"
 }

@@ -1,12 +1,8 @@
 .*
 !.gitignore
 
-misc
 code/_my
 code/models
 code-v2/_my
-code-v2/models
-code-v2/results
-text
-__pycache__/
-literature/
+**/.vscode
+**/__pycache__

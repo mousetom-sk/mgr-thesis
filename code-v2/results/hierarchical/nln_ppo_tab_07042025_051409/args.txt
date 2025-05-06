@@ -1,0 +1,46 @@
+{
+    "test_env_kwargs": {
+        "horizon": 50,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "goal_state": [
+            [
+                "a",
+                "b",
+                "c",
+                "d"
+            ]
+        ]
+    },
+    "phys_env_kwargs": {
+        "horizon": 4096,
+        "blocks": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "simulation_steps": 1
+    },
+    "test_test_seed": 47,
+    "test_episides": 1000,
+    "policy": {
+        "gae_lambda": 0.9,
+        "ent_coef": 0,
+        "max_batchsize": 1,
+        "deterministic_eval": true
+    },
+    "phys_policy": {
+        "gae_lambda": 1,
+        "ent_coef": 0,
+        "max_batchsize": 1,
+        "deterministic_eval": true
+    },
+    "sym_dir": "uran/symbolic/01_algorithms/nln_ppo_tab_biprod_adam_3/",
+    "phys_dir": "uran/physical/move/a2c_best_table_2",
+    "phys_run": "0"
+}

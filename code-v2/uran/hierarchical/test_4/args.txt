@@ -40,6 +40,6 @@
         "max_batchsize": 1
     },
     "sym_dir": "results/symbolic/01_algorithms/nln_ppo_tab_biprod_adam_3/",
-    "phys_dir": "results/physical/move/a2c_best_table/",
+    "phys_dir": "results/physical/move/a2c_best_cautious/",
     "phys_run": "3"
 }
